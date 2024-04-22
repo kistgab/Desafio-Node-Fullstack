@@ -1,4 +1,5 @@
 import { PlaceType } from '@domain/place/enums/place-type.enum';
+import { CreatePlaceRepository } from '@domain/place/repositories/create.place.repository';
 import { PlaceExistsByNameRepository } from '@domain/place/repositories/exists-by-name.place.repository';
 import { InputCreatePlaceDto } from '@usecases/place/create/dto/create.place.dto';
 
@@ -9,6 +10,15 @@ export function mockPlaceExistsByNameRepository(): PlaceExistsByNameRepository {
     }
   }
   return new PlaceExistsByNameRepositoryStub();
+}
+
+export function mockCreatePlaceRepository(): CreatePlaceRepository {
+  class CreatePlaceRepositoryStub implements CreatePlaceRepository {
+    async create(): Promise<void> {
+      return Promise.resolve();
+    }
+  }
+  return new CreatePlaceRepositoryStub();
 }
 
 export function mockInputCreatePlaceDto(): InputCreatePlaceDto {

@@ -1,36 +1,10 @@
 import { PlaceEntity } from '@domain/place/entity/place.entity';
-import { PlaceType } from '@domain/place/enums/place-type.enum';
-import {
-  PlaceEntityProps,
-  PlaceFactory,
-} from '@domain/place/factory/place.factory';
+import { PlaceFactory } from '@domain/place/factory/place.factory';
+import { mockPlaceEntityProps } from '@test/utils/place.utils';
 
-function mockInput(): PlaceEntityProps {
-  return {
-    id: 'any_id',
-    name: 'any_name',
-    nickname: 'any_nickname',
-    type: PlaceType.Stadium,
-    address: {
-      city: 'any_city',
-      state: 'any_state',
-      zipCode: 'any_zipcode',
-      line: 'any_line',
-      complement: 'any_compliment',
-    },
-    contact: {
-      mail: 'mail@mail.com',
-      phone: '99999999999',
-    },
-    entries: [],
-    ticketGates: [],
-    createdAt: new Date('2023-01-29'),
-    updatedAt: new Date('2024-04-04'),
-  };
-}
 describe('Place Factory', () => {
   it('should create an PlaceEntity correctly', () => {
-    const input = mockInput();
+    const input = mockPlaceEntityProps();
     const expectedResult = new PlaceEntity(
       input.id!,
       input.name,
@@ -51,7 +25,7 @@ describe('Place Factory', () => {
   });
 
   it('should call uuid generator correctly when id is not provided', () => {
-    const input = mockInput();
+    const input = mockPlaceEntityProps();
     input.id = undefined;
     const uuidSpy = jest.spyOn(crypto, 'randomUUID');
     uuidSpy.mockReturnValueOnce('any-u-u-i-d');
