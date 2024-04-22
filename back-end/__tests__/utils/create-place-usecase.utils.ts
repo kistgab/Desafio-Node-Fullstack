@@ -1,6 +1,6 @@
 import { PlaceType } from '@domain/place/enums/place-type.enum';
 import { PlaceExistsByNameRepository } from '@domain/place/repositories/exists-by-name.place.repository';
-import { InputCreatePlaceDto } from '@usecases/place/create/dto/create-place.dto';
+import { InputCreatePlaceDto } from '@usecases/place/create/dto/create.place.dto';
 
 export function mockPlaceExistsByNameRepository(): PlaceExistsByNameRepository {
   class PlaceExistsByNameRepositoryStub implements PlaceExistsByNameRepository {
