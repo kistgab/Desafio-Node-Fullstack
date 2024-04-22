@@ -1,25 +1,33 @@
 import { PlaceFactory } from '@domain/place/factory/place.factory';
+import { CreatePlaceRepository } from '@domain/place/repositories/create.place.repository';
 import { PlaceExistsByNameRepository } from '@domain/place/repositories/exists-by-name.place.repository';
 import {
+  mockCreatePlaceRepository,
   mockInputCreatePlaceDto,
   mockPlaceExistsByNameRepository,
 } from '@test/utils/create-place-usecase.utils';
+import { mockPlaceEntity } from '@test/utils/place.utils';
 import { CreatePlaceUseCase } from '@usecases/place/create/create.place.usecase';
 import { OutputCreatePlaceDto } from '@usecases/place/create/dto/create.place.dto';
 
 type SutTypes = {
   sut: CreatePlaceUseCase;
   placeExistsByNameRepositoryStub: PlaceExistsByNameRepository;
+  createPlaceRepositoryStub: CreatePlaceRepository;
 };
 
 export function mockCreatePlaceUseCase(): SutTypes {
   const placeExistsByNameRepositoryStub = mockPlaceExistsByNameRepository();
-  const sut = new CreatePlaceUseCase(placeExistsByNameRepositoryStub);
-  return { sut, placeExistsByNameRepositoryStub };
+  const createPlaceRepositoryStub = mockCreatePlaceRepository();
+  const sut = new CreatePlaceUseCase(
+    placeExistsByNameRepositoryStub,
+    createPlaceRepositoryStub,
+  );
+  return { sut, placeExistsByNameRepositoryStub, createPlaceRepositoryStub };
 }
 
 describe('Create Place UseCase', () => {
-  it('should call placeExistsByNameRepositoryStub with correct values', async () => {
+  it('should call PlaceExistsByNameRepository with correct values', async () => {
     const { sut, placeExistsByNameRepositoryStub } = mockCreatePlaceUseCase();
     const existsByNameSpy = jest.spyOn(
       placeExistsByNameRepositoryStub,
@@ -64,6 +72,18 @@ describe('Create Place UseCase', () => {
     await sut.execute(input);
 
     expect(createSpy).toHaveBeenCalledWith(input);
+  });
+
+  it('should call CreatePlaceRepository with correct values', async () => {
+    const { sut, createPlaceRepositoryStub } = mockCreatePlaceUseCase();
+    const mockedPlaceEntity = mockPlaceEntity();
+    jest.spyOn(PlaceFactory, 'create').mockReturnValueOnce(mockedPlaceEntity);
+    const createSpy = jest.spyOn(createPlaceRepositoryStub, 'create');
+    const input = mockInputCreatePlaceDto();
+
+    await sut.execute(input);
+
+    expect(createSpy).toHaveBeenCalledWith(mockedPlaceEntity);
   });
 
   it('should return the created place id', async () => {
