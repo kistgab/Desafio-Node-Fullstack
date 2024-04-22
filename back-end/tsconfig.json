@@ -18,9 +18,9 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@domain/*": ["domain/*"],
-      "@presentation/*": ["presentation/*"],
-      "@usecases/*": ["usecases/*"],
+      "@domain/*": ["src/domain/*"],
+      "@presentation/*": ["src/presentation/*"],
+      "@usecases/*": ["src/usecases/*"],
       "@test/*": ["__tests__/*"]
     }
   }
