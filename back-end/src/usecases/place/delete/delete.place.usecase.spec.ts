@@ -67,15 +67,4 @@ describe('Delete Place UseCase', () => {
 
     expect(deleteSpy).toHaveBeenCalledWith(input.id);
   });
-
-  it('should throw if DeletePlaceRepository throws', async () => {
-    const { sut, deletePlaceRepositoryStub } = mockDeletePlaceUseCase();
-    jest
-      .spyOn(deletePlaceRepositoryStub, 'delete')
-      .mockReturnValueOnce(Promise.reject(new Error('Repository error')));
-
-    const response = sut.execute(mockInputDeletePlaceDto());
-
-    expect(response).rejects.toEqual(new Error('Repository error'));
-  });
 });

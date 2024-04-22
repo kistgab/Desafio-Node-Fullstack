@@ -26,7 +26,7 @@ export abstract class PlaceFactory {
 export type PlaceEntityProps = {
   id?: string;
   name: string;
-  nickname: string;
+  nickname?: string;
   type: PlaceType;
   cnpj?: string;
   address: PlaceAddress;
