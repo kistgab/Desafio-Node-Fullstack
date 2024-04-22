@@ -3,7 +3,7 @@ import {
   mockInputCreatePlaceDto,
   mockPlaceExistsByNameRepository,
 } from '@test/utils/create-place-usecase.utils';
-import { CreatePlaceUseCase } from '@usecases/place/create/create-place.usecase';
+import { CreatePlaceUseCase } from '@usecases/place/create/create.place.usecase';
 
 type SutTypes = {
   sut: CreatePlaceUseCase;
@@ -28,5 +28,16 @@ describe('Create Place UseCase', () => {
     expect(response).toEqual(
       new Error('There is already a place with this name.'),
     );
+  });
+
+  it('should throw if PlaceExistsByNameRepository throws', async () => {
+    const { sut, placeExistsByNameRepositoryStub } = mockCreatePlaceUseCase();
+    jest
+      .spyOn(placeExistsByNameRepositoryStub, 'existsByName')
+      .mockReturnValueOnce(Promise.reject(new Error('Repository error')));
+
+    const response = sut.execute(mockInputCreatePlaceDto());
+
+    expect(response).rejects.toEqual(new Error('Repository error'));
   });
 });
