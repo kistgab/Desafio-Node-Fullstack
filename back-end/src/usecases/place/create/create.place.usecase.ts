@@ -17,9 +17,8 @@ export class CreatePlaceUseCase {
       return new Error('There is already a place with this name.');
     }
     const place = PlaceFactory.create(input);
-    place;
     return {
-      id: 'any_value',
+      id: place.id,
     };
   }
 }
