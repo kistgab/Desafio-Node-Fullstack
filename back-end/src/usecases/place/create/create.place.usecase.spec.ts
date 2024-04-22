@@ -5,6 +5,7 @@ import {
   mockPlaceExistsByNameRepository,
 } from '@test/utils/create-place-usecase.utils';
 import { CreatePlaceUseCase } from '@usecases/place/create/create.place.usecase';
+import { OutputCreatePlaceDto } from '@usecases/place/create/dto/create.place.dto';
 
 type SutTypes = {
   sut: CreatePlaceUseCase;
@@ -63,5 +64,17 @@ describe('Create Place UseCase', () => {
     await sut.execute(input);
 
     expect(createSpy).toHaveBeenCalledWith(input);
+  });
+
+  it('should return the created place id', async () => {
+    const { sut } = mockCreatePlaceUseCase();
+    jest.spyOn(crypto, 'randomUUID').mockReturnValueOnce('any-u-u-i-d');
+    const expectedResult: OutputCreatePlaceDto = {
+      id: 'any-u-u-i-d',
+    };
+
+    const result = await sut.execute(mockInputCreatePlaceDto());
+
+    expect(result).toEqual(expectedResult);
   });
 });
