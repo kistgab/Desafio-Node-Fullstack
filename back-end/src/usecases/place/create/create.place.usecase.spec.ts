@@ -1,3 +1,4 @@
+import { PlaceFactory } from '@domain/place/factory/place.factory';
 import { PlaceExistsByNameRepository } from '@domain/place/repositories/exists-by-name.place.repository';
 import {
   mockInputCreatePlaceDto,
@@ -52,5 +53,15 @@ describe('Create Place UseCase', () => {
     const response = sut.execute(mockInputCreatePlaceDto());
 
     expect(response).rejects.toEqual(new Error('Repository error'));
+  });
+
+  it('should call PlaceFactory with correct values', async () => {
+    const { sut } = mockCreatePlaceUseCase();
+    const createSpy = jest.spyOn(PlaceFactory, 'create');
+    const input = mockInputCreatePlaceDto();
+
+    await sut.execute(input);
+
+    expect(createSpy).toHaveBeenCalledWith(input);
   });
 });
