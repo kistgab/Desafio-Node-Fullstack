@@ -28,6 +28,7 @@ export function mockPlaceEntityProps(): PlaceEntityProps {
     },
     entries: [],
     ticketGates: [],
+    cnpj: 'any_cnpj',
     createdAt: new Date('2023-01-29'),
     updatedAt: new Date('2024-04-04'),
   };
