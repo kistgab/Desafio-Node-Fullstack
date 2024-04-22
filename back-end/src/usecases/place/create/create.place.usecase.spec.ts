@@ -17,6 +17,19 @@ export function mockCreatePlaceUseCase(): SutTypes {
 }
 
 describe('Create Place UseCase', () => {
+  it('should call placeExistsByNameRepositoryStub with correct values', async () => {
+    const { sut, placeExistsByNameRepositoryStub } = mockCreatePlaceUseCase();
+    const existsByNameSpy = jest.spyOn(
+      placeExistsByNameRepositoryStub,
+      'existsByName',
+    );
+    const input = mockInputCreatePlaceDto();
+
+    await sut.execute(input);
+
+    expect(existsByNameSpy).toHaveBeenCalledWith(input.name);
+  });
+
   it('should return an error when the name is not unique', async () => {
     const { sut, placeExistsByNameRepositoryStub } = mockCreatePlaceUseCase();
     jest
