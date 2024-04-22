@@ -19,6 +19,9 @@ export function mockInputCreatePlaceDto(): InputCreatePlaceDto {
     address: {
       city: 'any_city',
       state: 'any_state',
+      line: 'any_address',
+      zipCode: 'any_zip_code',
+      complement: 'any_complement',
     },
     contact: {
       mail: 'any_mail',

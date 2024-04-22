@@ -1,3 +1,4 @@
+import { PlaceFactory } from '@domain/place/factory/place.factory';
 import { PlaceExistsByNameRepository } from '@domain/place/repositories/exists-by-name.place.repository';
 import {
   InputCreatePlaceDto,
@@ -15,6 +16,8 @@ export class CreatePlaceUseCase {
     if (await this.placeExistsByNameRepository.existsByName(input.name)) {
       return new Error('There is already a place with this name.');
     }
+    const place = PlaceFactory.create(input);
+    place;
     return {
       id: 'any_value',
     };

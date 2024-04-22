@@ -8,6 +8,9 @@ export type InputCreatePlaceDto = {
   address: {
     city: string;
     state: string;
+    zipCode: string;
+    line: string;
+    complement?: string;
   };
   contact: {
     mail: string;
