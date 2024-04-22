@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Place {
+  id            String        @id @default(uuid())
+  name          String        @unique
+  nickname      String?
+  type          PlaceType
+  cpnj          String?
+  city          String
+  state         String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  contact_phone String
+  contact_email String
+  entries       Entry[]
+  ticket_gates  TicketGate[]
+  Event         Event[]
+  PlaceAddress  PlaceAddress?
+
+  @@index([name])
+  @@map("places")
+}
+
+enum PlaceType {
+  Stadium
+  Teather
+  Other
+}
+
+model PlaceAddress {
+  id         String  @id @default(uuid())
+  city       String
+  state      String
+  zip_code   String
+  address    String
+  complement String?
+  place      Place   @relation(fields: [place_id], references: [id])
+  place_id   String  @unique
+
+  @@map("places_addresses")
+}
+
+model Entry {
+  id      String  @id @default(uuid())
+  name    String
+  Place   Place?  @relation(fields: [placeId], references: [id])
+  placeId String?
+
+  @@map("entries")
+}
+
+model TicketGate {
+  id      String  @id @default(uuid())
+  name    String
+  Place   Place?  @relation(fields: [placeId], references: [id])
+  placeId String?
+
+  @@map("ticket_gates")
+}
+
+model Event {
+  id            String    @id @default(uuid())
+  name          String
+  place         Place     @relation(fields: [placeId], references: [id])
+  placeId       String
+  date          DateTime
+  type          EventType
+  contact_phone String?
+  contact_email String
+
+  @@map("events")
+}
+
+enum EventType {
+  Soccer
+  Show
+  Presentation
+  Other
+}
