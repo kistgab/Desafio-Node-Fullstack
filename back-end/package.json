@@ -22,6 +22,7 @@
     "test:integration:noWatch": "npm test -- -c jest-integration.config.ts",
     "test:e2e:noWatch": "npm test -- -c jest-e2e.config.ts",
     "test:staged": "npm test -- --findRelatedTests",
+    "test:ci": "npm test -- --coverage",
     "prepare": "husky"
   },
   "dependencies": {
