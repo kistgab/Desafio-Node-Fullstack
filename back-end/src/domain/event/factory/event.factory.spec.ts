@@ -10,7 +10,7 @@ describe('Event Factory', () => {
       input.id!,
       input.name,
       input.type,
-      input.date,
+      input.duration,
       mockPlaceEntity(),
       input.contact,
     );
@@ -29,7 +29,7 @@ describe('Event Factory', () => {
       'any-u-u-i-d',
       input.name,
       input.type,
-      new Date('2021-01-01'),
+      input.duration,
       mockPlaceEntity(),
       input.contact,
     );

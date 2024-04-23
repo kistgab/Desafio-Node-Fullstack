@@ -1,5 +1,9 @@
+import { EventEntity } from '@domain/event/entity/event.entity';
 import { EventType } from '@domain/event/enums/event-type.enum';
-import { EventEntityProps } from '@domain/event/factory/event.factory';
+import {
+  EventEntityProps,
+  EventFactory,
+} from '@domain/event/factory/event.factory';
 import { mockPlaceEntity } from '@test/utils/place.utils';
 
 export function mockEventEntityProps(): EventEntityProps {
@@ -7,11 +11,18 @@ export function mockEventEntityProps(): EventEntityProps {
     id: 'any_id',
     name: 'any_name',
     type: EventType.Other,
-    date: new Date('2021-01-01'),
+    duration: {
+      startsAt: new Date('2021-01-01'),
+      endsAt: new Date('2021-01-02'),
+    },
     place: mockPlaceEntity(),
     contact: {
       phone: 'any_phone',
       email: 'any_email',
     },
   };
+}
+
+export function mockEventEntity(): EventEntity {
+  return EventFactory.create(mockEventEntityProps());
 }
