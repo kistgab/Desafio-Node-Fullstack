@@ -55,7 +55,7 @@ describe('Delete Place UseCase', () => {
 
     const response = sut.execute(mockInputDeletePlaceDto());
 
-    expect(response).rejects.toEqual(new Error('Repository error'));
+    await expect(response).rejects.toEqual(new Error('Repository error'));
   });
 
   it('should call DeletePlaceRepository with correct values', async () => {

@@ -13,6 +13,6 @@ export class DeletePlaceUseCase {
     if (!place) {
       return new Error('There is no place with the specified id.');
     }
-    this.deletePlaceRepository.delete(place.id);
+    await this.deletePlaceRepository.delete(place.id);
   }
 }

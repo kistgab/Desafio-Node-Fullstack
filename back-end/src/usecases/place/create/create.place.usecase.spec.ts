@@ -61,7 +61,7 @@ describe('Create Place UseCase', () => {
 
     const response = sut.execute(mockInputCreatePlaceDto());
 
-    expect(response).rejects.toEqual(new Error('Repository error'));
+    await expect(response).rejects.toEqual(new Error('Repository error'));
   });
 
   it('should call PlaceFactory with correct values', async () => {

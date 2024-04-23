@@ -48,7 +48,7 @@ describe('Detail Place UseCase', () => {
 
     const response = sut.execute(mockInputDetailPlaceDto());
 
-    expect(response).rejects.toEqual(new Error('Repository error'));
+    await expect(response).rejects.toEqual(new Error('Repository error'));
   });
 
   it('should call PlaceMapper with correct values', async () => {
@@ -70,7 +70,7 @@ describe('Detail Place UseCase', () => {
 
     const response = sut.execute(mockInputDetailPlaceDto());
 
-    expect(response).rejects.toEqual(new Error('Mapper error'));
+    await expect(response).rejects.toEqual(new Error('Mapper error'));
   });
 
   it('should return a detailed Place on success', async () => {

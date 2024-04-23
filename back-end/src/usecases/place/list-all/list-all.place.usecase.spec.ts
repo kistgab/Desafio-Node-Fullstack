@@ -45,7 +45,7 @@ describe('ListAll Place UseCase', () => {
 
     const response = sut.execute(mockInputListAllPlacesDto());
 
-    expect(response).rejects.toEqual(new Error('Repository error'));
+    await expect(response).rejects.toEqual(new Error('Repository error'));
   });
 
   it('should call PlaceMapper with correct values', async () => {
@@ -67,7 +67,7 @@ describe('ListAll Place UseCase', () => {
 
     const response = sut.execute(mockInputListAllPlacesDto());
 
-    expect(response).rejects.toEqual(new Error('Mapper error'));
+    await expect(response).rejects.toEqual(new Error('Mapper error'));
   });
 
   it('should return a list of all Places on success', async () => {
