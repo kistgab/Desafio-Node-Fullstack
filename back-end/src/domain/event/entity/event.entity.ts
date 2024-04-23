@@ -10,7 +10,7 @@ export class EventEntity {
     private _id: string,
     private _name: string,
     private _type: EventType,
-    private _date: EventDuration,
+    private _duration: EventDuration,
     private _place: PlaceEntity,
     private _contact: EventContact,
   ) {}
@@ -27,8 +27,8 @@ export class EventEntity {
     return this._type;
   }
 
-  get date(): EventDuration {
-    return this._date;
+  get duration(): EventDuration {
+    return this._duration;
   }
 
   get place(): PlaceEntity {
