@@ -13,6 +13,8 @@ export class EventEntity {
     private _duration: EventDuration,
     private _place: PlaceEntity,
     private _contact: EventContact,
+    private _createdAt: Date = new Date(),
+    private _updatedAt?: Date,
   ) {}
 
   get id(): string {
@@ -37,5 +39,13 @@ export class EventEntity {
 
   get contact(): EventContact {
     return this._contact;
+  }
+
+  public get updatedAt(): Date | undefined {
+    return this._updatedAt;
+  }
+
+  public get createdAt(): Date {
+    return this._createdAt;
   }
 }
