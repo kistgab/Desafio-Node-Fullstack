@@ -1,9 +1,21 @@
 version: '3'
 services:
-  api:
-    build: .
-    container_name: api-container
-    working_dir: /usr/src/api
-    restart: always
+  # api:
+  #   build: .
+  #   container_name: api-container
+  #   working_dir: /usr/src/api
+  #   restart: always
+  #   ports:
+  #     - '3000:3000'
+
+  postgresql:
+    image: postgres
+    container_name: postgresql-container
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_NAME}
     ports:
-      - '3000:3000'
+      - 5432:5432
+    restart: always
