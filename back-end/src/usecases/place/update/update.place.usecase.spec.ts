@@ -4,6 +4,7 @@ import { FindPlaceByIdRepository } from '@domain/place/repositories/find-by-id.p
 import { UpdatePlaceRepository } from '@domain/place/repositories/update.place.repository';
 import { mockPlaceExistsByNameRepository } from '@test/utils/create-place-usecase.utils';
 import { mockFindPlaceByIdRepository } from '@test/utils/delete-place-usecase.utils';
+import { mockPlaceEntity } from '@test/utils/place.utils';
 import {
   mockInputUpdatePlaceDto,
   mockUpdatePlaceRepository,
@@ -122,10 +123,15 @@ describe('Update Place UseCase', () => {
     const { sut } = mockUpdatePlaceUseCase();
     const factorySpy = jest.spyOn(PlaceFactory, 'create');
     const input = mockInputUpdatePlaceDto();
+    const mockedPlaceEntity = mockPlaceEntity();
 
     await sut.execute(input);
 
-    expect(factorySpy).toHaveBeenCalledWith(input);
+    expect(factorySpy).toHaveBeenCalledWith({
+      ...input,
+      createdAt: mockedPlaceEntity.createdAt,
+      updatedAt: new Date(),
+    });
   });
 
   it('should throw if PlaceFactory throws', async () => {
@@ -143,10 +149,17 @@ describe('Update Place UseCase', () => {
     const { sut, updatePlaceRepositoryStub } = mockUpdatePlaceUseCase();
     const updateSpy = jest.spyOn(updatePlaceRepositoryStub, 'update');
     const input = mockInputUpdatePlaceDto();
+    const mockedPlaceEntity = mockPlaceEntity();
 
     await sut.execute(input);
 
-    expect(updateSpy).toHaveBeenCalledWith(PlaceFactory.create(input));
+    expect(updateSpy).toHaveBeenCalledWith(
+      PlaceFactory.create({
+        ...input,
+        createdAt: mockedPlaceEntity.createdAt,
+        updatedAt: new Date(),
+      }),
+    );
   });
 
   it('should throw if UpdatePlaceRepository throws', async () => {

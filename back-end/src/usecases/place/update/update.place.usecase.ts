@@ -24,7 +24,12 @@ export class UpdatePlaceUseCase {
         return new Error('There is already a place with the specified name.');
       }
     }
-    const place = PlaceFactory.create(input);
+    // TODO: Use the createdAt and updatedAt
+    const place = PlaceFactory.create({
+      ...input,
+      createdAt: placeToEdit.createdAt,
+      updatedAt: new Date(),
+    });
     await this.updatePlaceRepository.update(place);
   }
 }
