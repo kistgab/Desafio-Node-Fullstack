@@ -26,4 +26,6 @@ export type EventEntityProps = {
   duration: EventDuration;
   place: PlaceEntity;
   contact: EventContact;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
