@@ -39,7 +39,7 @@ model PlaceAddress {
   zip_code   String
   address    String
   complement String?
-  place      Place   @relation(fields: [place_id], references: [id])
+  place      Place   @relation(fields: [place_id], references: [id], onDelete: Cascade)
   place_id   String  @unique
 
   @@map("places_addresses")
@@ -48,7 +48,7 @@ model PlaceAddress {
 model Entry {
   id       String  @id @default(uuid())
   name     String
-  place    Place?  @relation(fields: [place_id], references: [id])
+  place    Place?  @relation(fields: [place_id], references: [id], onDelete: Cascade)
   place_id String?
 
   @@unique([name, place_id])
@@ -58,7 +58,7 @@ model Entry {
 model TicketGate {
   id       String  @id @default(uuid())
   name     String
-  place    Place?  @relation(fields: [place_id], references: [id])
+  place    Place?  @relation(fields: [place_id], references: [id], onDelete: Cascade)
   place_id String?
 
   @@unique([name, place_id])
