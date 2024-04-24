@@ -1,8 +1,8 @@
 import { EventType, PlaceType, Prisma, PrismaClient } from '@prisma/client';
 
 export function mockPlaceModelData(props?: {
-  id: string;
-  name: string;
+  id?: string;
+  name?: string;
   addressId?: string;
   nickname?: string;
 }): Prisma.PlaceCreateInput {
