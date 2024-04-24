@@ -51,6 +51,7 @@ model Entry {
   place    Place?  @relation(fields: [place_id], references: [id])
   place_id String?
 
+  @@unique([name, place_id])
   @@map("entries")
 }
 
@@ -60,6 +61,7 @@ model TicketGate {
   place    Place?  @relation(fields: [place_id], references: [id])
   place_id String?
 
+  @@unique([name, place_id])
   @@map("ticket_gates")
 }
 
