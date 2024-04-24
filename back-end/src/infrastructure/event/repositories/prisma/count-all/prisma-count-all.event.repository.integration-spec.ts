@@ -1,6 +1,5 @@
 import { EventType, PrismaClient } from '@prisma/client';
-import { clearDatabase } from '@test/utils/prisma.utils';
-import { beforeEach } from 'node:test';
+import { clearDatabase, mockPlaceModelData } from '@test/utils/prisma.utils';
 import { PrismaCountAllEventsRepository } from 'src/infrastructure/event/repositories/prisma/count-all/prisma-count-all.event.repository';
 
 describe('PrismaCountAll Event Repository', () => {
@@ -13,6 +12,9 @@ describe('PrismaCountAll Event Repository', () => {
     prismaCountAllEventRepository = new PrismaCountAllEventsRepository(
       prismaClient,
     );
+    await prismaClient.place.create({
+      data: mockPlaceModelData(),
+    });
   });
 
   beforeEach(async () => {
@@ -24,7 +26,7 @@ describe('PrismaCountAll Event Repository', () => {
           startDate: new Date('2023-03-05'),
           endDate: new Date('2023-03-06'),
           name: 'name',
-          place_id: 'placeId',
+          place_id: 'any_id',
           type: EventType.Presentation,
           contact_phone: 'contact_phone',
           id: 'id',
@@ -34,7 +36,7 @@ describe('PrismaCountAll Event Repository', () => {
           startDate: new Date('2023-03-03'),
           endDate: new Date('2023-03-04'),
           name: 'other_name',
-          place_id: 'placeId2',
+          place_id: 'any_id',
           type: EventType.Show,
           contact_phone: 'other_contact_phone',
           id: 'other_id',
@@ -56,12 +58,11 @@ describe('PrismaCountAll Event Repository', () => {
   });
 
   it('should return 0 when there are no events', async () => {
-    const events = await prismaClient.event.findMany();
     const count = await prismaCountAllEventRepository.countAll({
       name: 'not_found',
     });
 
-    expect(count).toBe(events.length);
+    expect(count).toBe(0);
   });
 
   it('should return the count of only the filtered events', async () => {
