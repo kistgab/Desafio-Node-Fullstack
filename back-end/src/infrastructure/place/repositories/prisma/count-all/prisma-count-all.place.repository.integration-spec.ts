@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { clearDatabase, mockPlaceModelData } from '@test/utils/prisma.utils';
-import { PrismaCountAllPlacesRepository } from 'src/infrastructure/place/repositories/count-all/prisma-count-all.place.repository';
+import { PrismaCountAllPlacesRepository } from 'src/infrastructure/place/repositories/prisma/count-all/prisma-count-all.place.repository';
 
 describe('PrismaCountAll Place Repository', () => {
   let prismaCountAllPlaceRepository: PrismaCountAllPlacesRepository;
