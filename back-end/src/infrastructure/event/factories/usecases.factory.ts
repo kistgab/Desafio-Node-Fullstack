@@ -1,6 +1,9 @@
 import { PrismaClient } from '@prisma/client';
 import { CreateEventUseCase } from '@usecases/event/create/create.event.usecase';
+import { DeleteEventUseCase } from '@usecases/event/delete/delete.event.usecase';
 import { PrismaCreateEventRepository } from 'src/infrastructure/event/repositories/prisma/create/prisma-create.event.repository';
+import { PrismaDeleteEventRepository } from 'src/infrastructure/event/repositories/prisma/delete/prisma-delete.event.repository';
+import { PrismaFindEventByIdRepository } from 'src/infrastructure/event/repositories/prisma/find-by-id/prisma-find-by-id.event.repository';
 import { PrismaFindPlaceByIdRepository } from 'src/infrastructure/place/repositories/prisma/find-by-id/prisma-find-by-id.place.repository';
 import { PrismaIsPlaceAvailableAtRepository } from 'src/infrastructure/place/repositories/prisma/is-place-available-at/prisma-is-place-available-at.place.repository';
 
@@ -18,6 +21,18 @@ export abstract class EventUseCasesFactory {
       findPlaceByIdRepository,
       createEventRepository,
       isPlaceAvailableAtRepository,
+    );
+  }
+
+  static async deleteEvent(): Promise<DeleteEventUseCase> {
+    const prismaClient = new PrismaClient();
+    const findEventByIdRepository = new PrismaFindEventByIdRepository(
+      prismaClient,
+    );
+    const deleteEventRepository = new PrismaDeleteEventRepository(prismaClient);
+    return new DeleteEventUseCase(
+      findEventByIdRepository,
+      deleteEventRepository,
     );
   }
 }
