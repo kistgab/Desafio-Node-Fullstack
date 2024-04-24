@@ -86,4 +86,14 @@ describe('PrismaFindAll Event Repository', () => {
     expect(page2.length).toBe(totalEventsCount - 2);
     expect(pagesHasTheSameEvent).toBeFalsy();
   });
+
+  it('should retrun an empty array when no Event matches the filter', async () => {
+    const result = await prismaFindAllEventRepository.findAll({
+      page: 1,
+      take: 10,
+      filters: { name: 'not_found_filtered_name' },
+    });
+
+    expect(result.length).toBe(0);
+  });
 });
