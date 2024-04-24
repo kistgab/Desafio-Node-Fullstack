@@ -7,25 +7,27 @@ import {
   IsMobilePhone,
   IsNotEmpty,
   IsNotEmptyObject,
+  IsOptional,
   ValidateNested,
 } from 'class-validator';
 
 class DurationDto {
   @IsDateString({ strict: true })
   startsAt: string;
+
   @IsDateString({ strict: true })
   endsAt: string;
 }
 
 class ContactDto {
-  @IsEmail()
-  phone?: string;
-
   @IsMobilePhone()
+  @IsOptional()
+  phone?: string;
+  @IsEmail()
   email: string;
 }
 
-export class CreateEventControllerDto {
+export class UpdateEventControllerDto {
   @IsNotEmpty()
   name: string;
 

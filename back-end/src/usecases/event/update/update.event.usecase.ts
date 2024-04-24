@@ -26,6 +26,7 @@ export class UpdateEventUseCase {
       newPlace.id,
       input.duration.startsAt,
       input.duration.endsAt,
+      [eventToEdit.id],
     );
     if (!isAvailable) {
       return new Error('The place is not available at the specified time.');

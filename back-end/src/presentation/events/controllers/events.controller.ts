@@ -13,9 +13,11 @@ import {
   HttpStatus,
   Param,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import { CreateEventControllerDto } from '@presentation/events/dtos/create-event-controller.dto';
+import { UpdateEventControllerDto } from '@presentation/events/dtos/update-event-controller.dto';
 import { ListAllControllerDto } from '@presentation/place/dtos/list-all-controller.dto';
 import { OutputCreateEventDto } from '@usecases/event/create/dto/create.event.dto';
 import { OutputDetailEventDto } from '@usecases/event/detail/dto/detail.event.dto';
@@ -80,6 +82,27 @@ export class EventsController {
       };
     }
     const result = await useCase.execute(input);
+    if (result instanceof Error) {
+      throw new HttpException(result.message, HttpStatus.BAD_REQUEST);
+    }
+    return result;
+  }
+
+  @Put(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async update(
+    @Body() input: UpdateEventControllerDto,
+    @Param('id') id: string,
+  ): Promise<void> {
+    const useCase = await EventUseCasesFactory.updateEvent();
+    const result = await useCase.execute({
+      id,
+      ...input,
+      duration: {
+        endsAt: new Date(input.duration.endsAt),
+        startsAt: new Date(input.duration.startsAt),
+      },
+    });
     if (result instanceof Error) {
       throw new HttpException(result.message, HttpStatus.BAD_REQUEST);
     }
