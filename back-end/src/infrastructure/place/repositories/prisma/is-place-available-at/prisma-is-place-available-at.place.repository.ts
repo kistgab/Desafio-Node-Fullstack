@@ -1,6 +1,6 @@
 import { IsPlaceAvailableAtRepository } from '@domain/place/repositories/is-place-available-at.place.repository';
 
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 
 export class PrismaIsPlaceAvailableAtRepository
   implements IsPlaceAvailableAtRepository
@@ -15,30 +15,37 @@ export class PrismaIsPlaceAvailableAtRepository
     const eventsInPeriodCount = await this.prisma.event.count({
       where: {
         place_id: placeId,
-        OR: [
-          // Starts in the middle, ends in the middle
-          {
-            startDate: { gte: startDate, lte: endDate },
-            endDate: { lte: endDate },
-          },
-          // Starts in the middle, ends after
-          {
-            startDate: { gte: startDate, lte: endDate },
-            endDate: { gte: endDate },
-          },
-          // Starts before, ends in the middle
-          {
-            startDate: { lte: startDate },
-            endDate: { gte: startDate, lte: endDate },
-          },
-          // Starts before, ends after
-          {
-            startDate: { lte: startDate },
-            endDate: { gte: endDate },
-          },
-        ],
+        OR: this.getConditionToCheckEventsInPeriod(startDate, endDate),
       },
     });
     return eventsInPeriodCount === 0;
+  }
+
+  private getConditionToCheckEventsInPeriod(
+    startDate: Date,
+    endDate: Date,
+  ): Prisma.EventWhereInput[] {
+    const checkIfStartsInMiddleAndEndsInMiddle: Prisma.EventWhereInput = {
+      startDate: { gte: startDate, lte: endDate },
+      endDate: { lte: endDate },
+    };
+    const checkIfStartsInMiddleAndEndsAfter: Prisma.EventWhereInput = {
+      startDate: { gte: startDate, lte: endDate },
+      endDate: { gte: endDate },
+    };
+    const checkIfStartsBeforeAndEndsInMiddle: Prisma.EventWhereInput = {
+      startDate: { lte: startDate },
+      endDate: { gte: startDate, lte: endDate },
+    };
+    const checkIfStartsBeforeAndEndsAfter: Prisma.EventWhereInput = {
+      startDate: { lte: startDate },
+      endDate: { gte: endDate },
+    };
+    return [
+      checkIfStartsInMiddleAndEndsInMiddle,
+      checkIfStartsInMiddleAndEndsAfter,
+      checkIfStartsBeforeAndEndsInMiddle,
+      checkIfStartsBeforeAndEndsAfter,
+    ];
   }
 }
