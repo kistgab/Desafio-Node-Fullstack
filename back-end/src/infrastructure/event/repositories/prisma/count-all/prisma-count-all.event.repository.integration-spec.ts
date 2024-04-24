@@ -1,4 +1,5 @@
 import { EventType, PrismaClient } from '@prisma/client';
+import { clearDatabase } from '@test/utils/prisma.utils';
 import { beforeEach } from 'node:test';
 import { PrismaCountAllEventsRepository } from 'src/infrastructure/event/repositories/prisma/count-all/prisma-count-all.event.repository';
 
@@ -43,6 +44,7 @@ describe('PrismaCountAll Event Repository', () => {
   });
 
   afterAll(async () => {
+    await clearDatabase(prismaClient);
     await prismaClient.$disconnect();
   });
 
