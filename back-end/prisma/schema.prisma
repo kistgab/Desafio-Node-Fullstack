@@ -19,7 +19,7 @@ model Place {
   contact_email String
   entries       Entry[]
   ticket_gates  TicketGate[]
-  event         Event[]
+  events        Event[]
   place_address PlaceAddress?
 
   @@index([name])
