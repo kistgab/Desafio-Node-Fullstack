@@ -3,6 +3,7 @@ import { EventType, PlaceType, Prisma, PrismaClient } from '@prisma/client';
 export function mockPlaceModelData(props?: {
   id: string;
   name: string;
+  addressId?: string;
 }): Prisma.PlaceCreateInput {
   return {
     id: props?.id ?? 'any_id',
@@ -16,20 +17,12 @@ export function mockPlaceModelData(props?: {
     contact_phone: 'contact_phone',
     entries: {
       createMany: {
-        data: [
-          { name: 'entry', id: 'any_id' },
-          { name: 'entry2', id: 'any_other_id' },
-          { name: 'entry3', id: 'any_another_id' },
-        ],
+        data: [{ name: 'entry' }, { name: 'entry2' }, { name: 'entry3' }],
       },
     },
     ticket_gates: {
       createMany: {
-        data: [
-          { name: 'gate', id: 'any_id' },
-          { name: 'gate2', id: 'any_other_id' },
-          { name: 'gate3', id: 'any_another_id' },
-        ],
+        data: [{ name: 'gate' }, { name: 'gate2' }, { name: 'gate3' }],
       },
     },
     place_address: {
@@ -39,7 +32,7 @@ export function mockPlaceModelData(props?: {
         state: 'state',
         zip_code: 'zip_code',
         complement: 'complement',
-        id: 'any_id',
+        id: props?.addressId ?? 'any_id',
       },
     },
   };
