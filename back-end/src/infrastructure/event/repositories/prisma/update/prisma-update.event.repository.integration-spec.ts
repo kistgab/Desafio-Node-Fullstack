@@ -16,7 +16,6 @@ describe('PrismaCountAll Event Repository', () => {
     prismaClient = new PrismaClient();
     await prismaClient.$connect();
     prismaUpdateEventRepository = new PrismaUpdateEventRepository(prismaClient);
-    jest.setSystemTime(new Date('2023-04-23'));
   });
 
   beforeEach(async () => {
@@ -30,7 +29,6 @@ describe('PrismaCountAll Event Repository', () => {
   afterAll(async () => {
     await clearDatabase(prismaClient);
     await prismaClient.$disconnect();
-    jest.useRealTimers();
   });
 
   it('should update the event', async () => {

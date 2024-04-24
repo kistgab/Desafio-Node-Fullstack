@@ -37,11 +37,14 @@ export function mockUpdatePlaceUseCase(): SutTypes {
 
 describe('Update Place UseCase', () => {
   beforeAll(() => {
-    jest.setSystemTime(new Date('2023-04-23'));
+    const mockedDate = new Date(2023, 9, 1, 7);
+    jest.spyOn(global, 'Date').mockImplementation(() => {
+      return mockedDate;
+    });
   });
 
   afterAll(() => {
-    jest.useRealTimers();
+    jest.restoreAllMocks();
   });
 
   it('should call FindPlaceByIdRepository with correct values', async () => {

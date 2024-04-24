@@ -4,6 +4,17 @@ import { mockEventEntityProps } from '@test/utils/event.utils';
 import { mockPlaceEntity } from '@test/utils/place.utils';
 
 describe('Event Factory', () => {
+  beforeAll(() => {
+    const mockedDate = new Date(2023, 9, 1, 7);
+    jest.spyOn(global, 'Date').mockImplementation(() => {
+      return mockedDate;
+    });
+  });
+
+  afterAll(() => {
+    jest.restoreAllMocks();
+  });
+
   it('should create an EventEntity correctly', () => {
     const input = mockEventEntityProps();
     const expectedResult = new EventEntity(

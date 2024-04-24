@@ -3,6 +3,17 @@ import { PlaceFactory } from '@domain/place/factory/place.factory';
 import { mockPlaceEntityProps } from '@test/utils/place.utils';
 
 describe('Place Factory', () => {
+  beforeAll(() => {
+    const mockedDate = new Date(2023, 9, 1, 7);
+    jest.spyOn(global, 'Date').mockImplementation(() => {
+      return mockedDate;
+    });
+  });
+
+  afterAll(() => {
+    jest.restoreAllMocks();
+  });
+
   it('should create an PlaceEntity correctly', () => {
     const input = mockPlaceEntityProps();
     const expectedResult = new PlaceEntity(
