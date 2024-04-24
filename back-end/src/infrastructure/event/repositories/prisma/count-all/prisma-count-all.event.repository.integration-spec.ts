@@ -24,7 +24,7 @@ describe('PrismaCountAll Event Repository', () => {
           startDate: new Date('2023-03-05'),
           endDate: new Date('2023-03-06'),
           name: 'name',
-          placeId: 'placeId',
+          place_id: 'placeId',
           type: EventType.Presentation,
           contact_phone: 'contact_phone',
           id: 'id',
@@ -34,7 +34,7 @@ describe('PrismaCountAll Event Repository', () => {
           startDate: new Date('2023-03-03'),
           endDate: new Date('2023-03-04'),
           name: 'other_name',
-          placeId: 'placeId2',
+          place_id: 'placeId2',
           type: EventType.Show,
           contact_phone: 'other_contact_phone',
           id: 'other_id',
@@ -58,7 +58,7 @@ describe('PrismaCountAll Event Repository', () => {
   it('should return 0 when there are no events', async () => {
     const events = await prismaClient.event.findMany();
     const count = await prismaCountAllEventRepository.countAll({
-      name: 'not_found_name',
+      name: 'not_found',
     });
 
     expect(count).toBe(events.length);
@@ -67,9 +67,11 @@ describe('PrismaCountAll Event Repository', () => {
   it('should return the count of only the filtered events', async () => {
     const events = await prismaClient.event.findMany();
     const count = await prismaCountAllEventRepository.countAll({
-      name: 'name',
+      name: 'nam',
     });
 
-    expect(count).toBe(events.filter((event) => event.name === 'name').length);
+    expect(count).toBe(
+      events.filter((event) => event.name.includes('name')).length,
+    );
   });
 });

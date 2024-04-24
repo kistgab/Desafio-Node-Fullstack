@@ -13,7 +13,7 @@ export class PrismaCreateEventRepository implements CreateEventRepository {
         startDate: event.duration.startsAt,
         endDate: event.duration.endsAt,
         name: event.name,
-        placeId: event.place.id,
+        place_id: event.place.id,
         type: event.type,
         id: event.id,
       },

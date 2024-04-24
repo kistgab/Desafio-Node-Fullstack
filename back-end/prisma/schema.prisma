@@ -13,16 +13,14 @@ model Place {
   nickname      String?
   type          PlaceType
   cpnj          String?
-  city          String
-  state         String
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  created_at    DateTime      @default(now())
+  updated_at    DateTime      @updatedAt
   contact_phone String
   contact_email String
   entries       Entry[]
   ticket_gates  TicketGate[]
-  Event         Event[]
-  PlaceAddress  PlaceAddress?
+  event         Event[]
+  place_address PlaceAddress?
 
   @@index([name])
   @@map("places")
@@ -48,19 +46,19 @@ model PlaceAddress {
 }
 
 model Entry {
-  id      String  @id @default(uuid())
-  name    String
-  Place   Place?  @relation(fields: [placeId], references: [id])
-  placeId String?
+  id       String  @id @default(uuid())
+  name     String
+  place    Place?  @relation(fields: [place_id], references: [id])
+  place_id String?
 
   @@map("entries")
 }
 
 model TicketGate {
-  id      String  @id @default(uuid())
-  name    String
-  Place   Place?  @relation(fields: [placeId], references: [id])
-  placeId String?
+  id       String  @id @default(uuid())
+  name     String
+  place    Place?  @relation(fields: [place_id], references: [id])
+  place_id String?
 
   @@map("ticket_gates")
 }
@@ -68,13 +66,15 @@ model TicketGate {
 model Event {
   id            String    @id @default(uuid())
   name          String
-  place         Place     @relation(fields: [placeId], references: [id])
-  placeId       String
+  place         Place     @relation(fields: [place_id], references: [id])
+  place_id      String
   startDate     DateTime
   endDate       DateTime
   type          EventType
   contact_phone String?
   contact_email String
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
 
   @@map("events")
 }

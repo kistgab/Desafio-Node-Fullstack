@@ -10,7 +10,9 @@ export class PrismaCountAllEventsRepository
   async countAll(filters?: EventFilters | undefined): Promise<number> {
     return await this.prisma.event.count({
       where: {
-        ...filters,
+        name: {
+          contains: filters?.name,
+        },
       },
     });
   }
