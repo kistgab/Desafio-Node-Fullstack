@@ -87,7 +87,7 @@ describe('PrismaFindAll Event Repository', () => {
     expect(pagesHasTheSameEvent).toBeFalsy();
   });
 
-  it('should retrun an empty array when no Event matches the filter', async () => {
+  it('should return an empty array when no Event matches the filter', async () => {
     const result = await prismaFindAllEventRepository.findAll({
       page: 1,
       take: 10,
