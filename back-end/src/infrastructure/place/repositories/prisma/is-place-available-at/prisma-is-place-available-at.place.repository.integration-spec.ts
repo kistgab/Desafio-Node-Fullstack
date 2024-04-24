@@ -40,7 +40,7 @@ describe('PrismaExistsByName Place Repository', () => {
       new Date(2022, 1, 11, 10, 30),
     );
 
-    expect(result).toBeFalsy();
+    expect(result).toBeTruthy();
   });
 
   it('should return true when the place is available before an schedule', async () => {
@@ -50,7 +50,7 @@ describe('PrismaExistsByName Place Repository', () => {
       new Date(2022, 1, 10, 20, 0),
     );
 
-    expect(result).toBeFalsy();
+    expect(result).toBeTruthy();
   });
 
   it('should return false when the place is occupied (starts in the middle, ends in the middle)', async () => {
