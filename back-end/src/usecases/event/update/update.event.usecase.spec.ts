@@ -5,6 +5,8 @@ import {
 import { FindEventByIdRepository } from '@domain/event/repositories/find-by-id.event.repository';
 import { UpdateEventRepository } from '@domain/event/repositories/update.event.repository';
 import { FindPlaceByIdRepository } from '@domain/place/repositories/find-by-id.place.repository';
+import { IsPlaceAvailableAtRepository } from '@domain/place/repositories/is-place-available-at.place.repository';
+import { mockIsPlaceAvailableAtRepository } from '@test/utils/create-event-usecase.utils';
 import { mockFindEventByIdRepository } from '@test/utils/delete-event-usecase.utils';
 import { mockFindPlaceByIdRepository } from '@test/utils/delete-place-usecase.utils';
 import { mockEventEntity } from '@test/utils/event.utils';
@@ -21,22 +23,26 @@ type SutTypes = {
   updateEventRepositoryStub: UpdateEventRepository;
   findEventByIdRepositoryStub: FindEventByIdRepository;
   findPlaceByIdRepositoryStub: FindPlaceByIdRepository;
+  isPlaceAvailableAtRepositoryStub: IsPlaceAvailableAtRepository;
 };
 
 export function mockUpdateEventUseCase(): SutTypes {
   const updateEventRepositoryStub = mockUpdateEventRepository();
   const findEventByIdRepositoryStub = mockFindEventByIdRepository();
   const findPlaceByIdRepositoryStub = mockFindPlaceByIdRepository();
+  const isPlaceAvailableAtRepositoryStub = mockIsPlaceAvailableAtRepository();
   const sut = new UpdateEventUseCase(
     findEventByIdRepositoryStub,
     findPlaceByIdRepositoryStub,
     updateEventRepositoryStub,
+    isPlaceAvailableAtRepositoryStub,
   );
   return {
     sut,
     updateEventRepositoryStub,
     findPlaceByIdRepositoryStub,
     findEventByIdRepositoryStub,
+    isPlaceAvailableAtRepositoryStub,
   };
 }
 
@@ -113,6 +119,47 @@ describe('Update Event UseCase', () => {
     const { sut, findPlaceByIdRepositoryStub } = mockUpdateEventUseCase();
     jest
       .spyOn(findPlaceByIdRepositoryStub, 'findById')
+      .mockReturnValueOnce(Promise.reject(new Error('Repository error')));
+
+    const response = sut.execute(mockInputUpdateEventDto());
+
+    await expect(response).rejects.toEqual(new Error('Repository error'));
+  });
+
+  it('should call IsPlaceAvailableAtRepository with correct values', async () => {
+    const { sut, isPlaceAvailableAtRepositoryStub } = mockUpdateEventUseCase();
+    const isAvailableAtSpy = jest.spyOn(
+      isPlaceAvailableAtRepositoryStub,
+      'isAvailableAt',
+    );
+    const input = mockInputUpdateEventDto();
+
+    await sut.execute(input);
+
+    expect(isAvailableAtSpy).toHaveBeenCalledWith(
+      input.placeId,
+      input.duration.startsAt,
+      input.duration.endsAt,
+    );
+  });
+
+  it('should return an error when IsPlaceAvailableAtRepository returns false', async () => {
+    const { sut, isPlaceAvailableAtRepositoryStub } = mockUpdateEventUseCase();
+    jest
+      .spyOn(isPlaceAvailableAtRepositoryStub, 'isAvailableAt')
+      .mockResolvedValueOnce(false);
+
+    const response = await sut.execute(mockInputUpdateEventDto());
+
+    expect(response).toEqual(
+      new Error('The place is not available at the specified time.'),
+    );
+  });
+
+  it('should throw if IsPlaceAvailableAtRepository throws', async () => {
+    const { sut, isPlaceAvailableAtRepositoryStub } = mockUpdateEventUseCase();
+    jest
+      .spyOn(isPlaceAvailableAtRepositoryStub, 'isAvailableAt')
       .mockReturnValueOnce(Promise.reject(new Error('Repository error')));
 
     const response = sut.execute(mockInputUpdateEventDto());
