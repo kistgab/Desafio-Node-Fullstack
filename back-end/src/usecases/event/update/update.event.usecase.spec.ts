@@ -4,7 +4,7 @@ import {
 } from '@domain/event/factory/event.factory';
 import { FindEventByIdRepository } from '@domain/event/repositories/find-by-id.event.repository';
 import { UpdateEventRepository } from '@domain/event/repositories/update.event.repository';
-import { FindPlaceByIdRepository } from '@domain/place/repositories/find-by-id.place.repository copy';
+import { FindPlaceByIdRepository } from '@domain/place/repositories/find-by-id.place.repository';
 import { mockFindEventByIdRepository } from '@test/utils/delete-event-usecase.utils';
 import { mockFindPlaceByIdRepository } from '@test/utils/delete-place-usecase.utils';
 import { mockEventEntity } from '@test/utils/event.utils';

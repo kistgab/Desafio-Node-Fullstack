@@ -1,6 +1,6 @@
 import { PlaceFactory } from '@domain/place/factory/place.factory';
 import { PlaceExistsByNameRepository } from '@domain/place/repositories/exists-by-name.place.repository';
-import { FindPlaceByIdRepository } from '@domain/place/repositories/find-by-id.place.repository copy';
+import { FindPlaceByIdRepository } from '@domain/place/repositories/find-by-id.place.repository';
 import { UpdatePlaceRepository } from '@domain/place/repositories/update.place.repository';
 import { InputUpdatePlaceDto } from '@usecases/place/update/dto/update.place.dto';
 

@@ -1,7 +1,7 @@
 import { EventFactory } from '@domain/event/factory/event.factory';
 import { FindEventByIdRepository } from '@domain/event/repositories/find-by-id.event.repository';
 import { UpdateEventRepository } from '@domain/event/repositories/update.event.repository';
-import { FindPlaceByIdRepository } from '@domain/place/repositories/find-by-id.place.repository copy';
+import { FindPlaceByIdRepository } from '@domain/place/repositories/find-by-id.place.repository';
 import { InputUpdateEventDto } from '@usecases/event/update/dto/update.event.dto';
 
 export class UpdateEventUseCase {

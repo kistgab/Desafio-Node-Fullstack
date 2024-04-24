@@ -1,5 +1,5 @@
 import { PlaceMapper } from '@domain/place/mapper/place.mapper';
-import { FindPlaceByIdRepository } from '@domain/place/repositories/find-by-id.place.repository copy';
+import { FindPlaceByIdRepository } from '@domain/place/repositories/find-by-id.place.repository';
 import { mockFindPlaceByIdRepository } from '@test/utils/delete-place-usecase.utils';
 import { mockInputDetailPlaceDto } from '@test/utils/detail-place-usecase.utils';
 import { mockPlaceEntity } from '@test/utils/place.utils';

@@ -1,5 +1,5 @@
 import { PlaceMapper } from '@domain/place/mapper/place.mapper';
-import { FindPlaceByIdRepository } from '@domain/place/repositories/find-by-id.place.repository copy';
+import { FindPlaceByIdRepository } from '@domain/place/repositories/find-by-id.place.repository';
 import {
   InputDetailPlaceDto,
   OutputDetailPlaceDto,

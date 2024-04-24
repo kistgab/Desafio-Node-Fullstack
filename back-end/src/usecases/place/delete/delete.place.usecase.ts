@@ -1,5 +1,5 @@
 import { DeletePlaceRepository } from '@domain/place/repositories/delete.place.repository';
-import { FindPlaceByIdRepository } from '@domain/place/repositories/find-by-id.place.repository copy';
+import { FindPlaceByIdRepository } from '@domain/place/repositories/find-by-id.place.repository';
 import { InputDeletePlaceDto } from '@usecases/place/delete/dto/delete.place.dto';
 
 export class DeletePlaceUseCase {

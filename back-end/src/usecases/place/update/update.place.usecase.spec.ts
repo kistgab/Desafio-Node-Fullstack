@@ -1,6 +1,6 @@
 import { PlaceFactory } from '@domain/place/factory/place.factory';
 import { PlaceExistsByNameRepository } from '@domain/place/repositories/exists-by-name.place.repository';
-import { FindPlaceByIdRepository } from '@domain/place/repositories/find-by-id.place.repository copy';
+import { FindPlaceByIdRepository } from '@domain/place/repositories/find-by-id.place.repository';
 import { UpdatePlaceRepository } from '@domain/place/repositories/update.place.repository';
 import { mockPlaceExistsByNameRepository } from '@test/utils/create-place-usecase.utils';
 import { mockFindPlaceByIdRepository } from '@test/utils/delete-place-usecase.utils';

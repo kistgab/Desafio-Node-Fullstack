@@ -1,6 +1,6 @@
 import { PlaceEntity } from '@domain/place/entity/place.entity';
 import { DeletePlaceRepository } from '@domain/place/repositories/delete.place.repository';
-import { FindPlaceByIdRepository } from '@domain/place/repositories/find-by-id.place.repository copy';
+import { FindPlaceByIdRepository } from '@domain/place/repositories/find-by-id.place.repository';
 import { mockPlaceEntity } from '@test/utils/place.utils';
 import { InputDeletePlaceDto } from '@usecases/place/delete/dto/delete.place.dto';
 

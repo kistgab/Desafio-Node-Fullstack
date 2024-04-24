@@ -3,7 +3,7 @@ import {
   EventFactory,
 } from '@domain/event/factory/event.factory';
 import { CreateEventRepository } from '@domain/event/repositories/create.event.repository';
-import { FindPlaceByIdRepository } from '@domain/place/repositories/find-by-id.place.repository copy';
+import { FindPlaceByIdRepository } from '@domain/place/repositories/find-by-id.place.repository';
 import { IsPlaceAvailableAtRepository } from '@domain/place/repositories/is-place-available-at.place.repository';
 import {
   mockCreateEventRepository,
