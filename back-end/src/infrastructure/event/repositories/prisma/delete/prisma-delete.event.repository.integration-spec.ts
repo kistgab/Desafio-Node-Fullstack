@@ -4,7 +4,6 @@ import {
   mockEventModelData,
   mockPlaceModelData,
 } from '@test/utils/prisma.utils';
-import { beforeEach } from 'node:test';
 import { PrismaDeleteEventRepository } from 'src/infrastructure/event/repositories/prisma/delete/prisma-delete.event.repository';
 
 describe('PrismaDelete Event Repository', () => {

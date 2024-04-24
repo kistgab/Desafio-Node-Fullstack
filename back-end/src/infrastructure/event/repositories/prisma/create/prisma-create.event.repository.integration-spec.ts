@@ -1,7 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { mockEventEntity } from '@test/utils/event.utils';
 import { clearDatabase, mockPlaceModelData } from '@test/utils/prisma.utils';
-import { beforeEach } from 'node:test';
 import { PrismaCreateEventRepository } from 'src/infrastructure/event/repositories/prisma/create/prisma-create.event.repository';
 
 describe('PrismaCreate Event Repository', () => {
