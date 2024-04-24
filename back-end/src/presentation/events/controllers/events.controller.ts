@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   HttpCode,
   HttpException,
   HttpStatus,
@@ -10,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { CreateEventControllerDto } from '@presentation/events/dtos/create-event-controller.dto';
 import { OutputCreateEventDto } from '@usecases/event/create/dto/create.event.dto';
+import { OutputDetailEventDto } from '@usecases/event/detail/dto/detail.event.dto';
 import { EventUseCasesFactory } from 'src/infrastructure/event/factories/usecases.factory';
 
 @Controller('events')
@@ -41,5 +43,16 @@ export class EventsController {
     if (result instanceof Error) {
       throw new HttpException(result.message, HttpStatus.BAD_REQUEST);
     }
+  }
+
+  @Get(':id')
+  @HttpCode(HttpStatus.OK)
+  async detail(@Param('id') id: string): Promise<OutputDetailEventDto> {
+    const useCase = await EventUseCasesFactory.detailEvent();
+    const result = await useCase.execute({ id });
+    if (result instanceof Error) {
+      throw new HttpException(result.message, HttpStatus.BAD_REQUEST);
+    }
+    return result;
   }
 }

@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { CreateEventUseCase } from '@usecases/event/create/create.event.usecase';
 import { DeleteEventUseCase } from '@usecases/event/delete/delete.event.usecase';
+import { DetailEventUseCase } from '@usecases/event/detail/detail.event.usecase';
 import { PrismaCreateEventRepository } from 'src/infrastructure/event/repositories/prisma/create/prisma-create.event.repository';
 import { PrismaDeleteEventRepository } from 'src/infrastructure/event/repositories/prisma/delete/prisma-delete.event.repository';
 import { PrismaFindEventByIdRepository } from 'src/infrastructure/event/repositories/prisma/find-by-id/prisma-find-by-id.event.repository';
@@ -34,5 +35,13 @@ export abstract class EventUseCasesFactory {
       findEventByIdRepository,
       deleteEventRepository,
     );
+  }
+
+  static async detailEvent(): Promise<DetailEventUseCase> {
+    const prismaClient = new PrismaClient();
+    const findEventByIdRepository = new PrismaFindEventByIdRepository(
+      prismaClient,
+    );
+    return new DetailEventUseCase(findEventByIdRepository);
   }
 }
