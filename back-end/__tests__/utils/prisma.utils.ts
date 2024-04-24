@@ -4,6 +4,7 @@ export function mockPlaceModelData(props?: {
   id: string;
   name: string;
   addressId?: string;
+  nickname?: string;
 }): Prisma.PlaceCreateInput {
   return {
     id: props?.id ?? 'any_id',
@@ -13,7 +14,7 @@ export function mockPlaceModelData(props?: {
     cpnj: 'cpnj',
     created_at: new Date(),
     updated_at: new Date(),
-    nickname: 'nickname',
+    nickname: props?.nickname ?? 'nickname',
     contact_phone: 'contact_phone',
     entries: {
       createMany: {
