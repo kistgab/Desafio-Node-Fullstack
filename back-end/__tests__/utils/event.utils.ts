@@ -6,23 +6,27 @@ import {
 } from '@domain/event/factory/event.factory';
 import { mockPlaceEntity } from '@test/utils/place.utils';
 
-export function mockEventEntityProps(): EventEntityProps {
+export function mockEventEntityProps(
+  props?: Partial<EventEntityProps>,
+): EventEntityProps {
   return {
-    id: 'any_id',
-    name: 'any_name',
-    type: EventType.Other,
-    duration: {
+    id: props?.id ?? 'any_id',
+    name: props?.name ?? 'any_name',
+    type: props?.type ?? EventType.Other,
+    duration: props?.duration ?? {
       startsAt: new Date('2021-01-01'),
       endsAt: new Date('2021-01-02'),
     },
-    place: mockPlaceEntity(),
-    contact: {
+    place: props?.place ?? mockPlaceEntity(),
+    contact: props?.contact ?? {
       phone: 'any_phone',
       email: 'any_email',
     },
   };
 }
 
-export function mockEventEntity(): EventEntity {
-  return EventFactory.create(mockEventEntityProps());
+export function mockEventEntity(
+  props?: Partial<EventEntityProps>,
+): EventEntity {
+  return EventFactory.create(mockEventEntityProps(props));
 }
