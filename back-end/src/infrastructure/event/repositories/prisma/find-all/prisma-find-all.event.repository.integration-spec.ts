@@ -59,4 +59,31 @@ describe('PrismaFindAll Event Repository', () => {
     expect(result.length).toBeGreaterThan(0);
     expect(result.length).toBe(totalEventsCount);
   });
+
+  it('should findAll Events but limited to pageSize', async () => {
+    const result = await prismaFindAllEventRepository.findAll({
+      page: 1,
+      take: 2,
+    });
+
+    expect(result.length).toBe(2);
+  });
+
+  it('should find Events that are not in the last page to the second', async () => {
+    const totalEventsCount = await prismaClient.event.count();
+    const page1 = await prismaFindAllEventRepository.findAll({
+      page: 1,
+      take: 2,
+    });
+
+    const page2 = await prismaFindAllEventRepository.findAll({
+      page: 2,
+      take: 2,
+    });
+
+    const pagesHasTheSameEvent = page2.some((event) => page1.includes(event));
+    expect(page1.length).toBe(2);
+    expect(page2.length).toBe(totalEventsCount - 2);
+    expect(pagesHasTheSameEvent).toBeFalsy();
+  });
 });
