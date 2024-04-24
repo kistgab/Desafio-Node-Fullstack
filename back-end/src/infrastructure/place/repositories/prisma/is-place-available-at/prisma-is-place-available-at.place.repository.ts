@@ -11,10 +11,14 @@ export class PrismaIsPlaceAvailableAtRepository
     placeId: string,
     startDate: Date,
     endDate: Date,
+    eventIdsToIgnore?: string[],
   ): Promise<boolean> {
     const eventsInPeriodCount = await this.prisma.event.count({
       where: {
         place_id: placeId,
+        id: {
+          notIn: eventIdsToIgnore,
+        },
         OR: this.getConditionToCheckEventsInPeriod(startDate, endDate),
       },
     });

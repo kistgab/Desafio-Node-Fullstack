@@ -53,6 +53,17 @@ describe('PrismaExistsByName Place Repository', () => {
     expect(result).toBeTruthy();
   });
 
+  it('should return true when the event has to be ignored', async () => {
+    const result = await prismaIsPlaceAvailableAtRepository.isAvailableAt(
+      'any_id',
+      new Date(2022, 1, 10, 21, 30),
+      new Date(2022, 1, 10, 23, 50),
+      ['any_id'],
+    );
+
+    expect(result).toBeTruthy();
+  });
+
   it('should return false when the place is occupied (starts in the middle, ends in the middle)', async () => {
     const result = await prismaIsPlaceAvailableAtRepository.isAvailableAt(
       'any_id',
