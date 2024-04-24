@@ -39,23 +39,25 @@ export function mockPlaceModelData(props?: {
   };
 }
 
-export function mockEventModelData(props?: {
-  id: string;
-  name: string;
-}): Prisma.EventCreateInput {
+export function mockEventModelData(
+  props?: Partial<Prisma.EventCreateInput>,
+): Prisma.EventCreateInput {
   return {
-    contact_email: 'contact_email',
-    contact_phone: 'contact_phone',
-    endDate: new Date(),
-    id: props?.id ?? 'any_id',
-    name: props?.name ?? 'name',
-    startDate: new Date(),
-    type: EventType.Soccer,
-    place: {
-      connect: {
-        id: 'any_id',
+    ...{
+      contact_email: 'contact_email',
+      contact_phone: 'contact_phone',
+      endDate: new Date(),
+      id: 'any_id',
+      name: 'name',
+      startDate: new Date(),
+      type: EventType.Soccer,
+      place: {
+        connect: {
+          id: 'any_id',
+        },
       },
     },
+    ...props,
   };
 }
 
