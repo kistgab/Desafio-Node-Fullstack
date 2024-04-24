@@ -70,7 +70,8 @@ model Event {
   name          String
   place         Place     @relation(fields: [placeId], references: [id])
   placeId       String
-  date          DateTime
+  startDate     DateTime
+  endDate       DateTime
   type          EventType
   contact_phone String?
   contact_email String

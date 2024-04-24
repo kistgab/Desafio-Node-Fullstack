@@ -20,7 +20,8 @@ describe('PrismaCountAll Event Repository', () => {
       data: [
         {
           contact_email: 'contact_email',
-          date: new Date(),
+          startDate: new Date('2023-03-05'),
+          endDate: new Date('2023-03-06'),
           name: 'name',
           placeId: 'placeId',
           type: EventType.Presentation,
@@ -29,7 +30,8 @@ describe('PrismaCountAll Event Repository', () => {
         },
         {
           contact_email: 'other_contact_email',
-          date: new Date('2023-03-03'),
+          startDate: new Date('2023-03-03'),
+          endDate: new Date('2023-03-04'),
           name: 'other_name',
           placeId: 'placeId2',
           type: EventType.Show,
