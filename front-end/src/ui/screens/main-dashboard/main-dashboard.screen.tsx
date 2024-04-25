@@ -10,34 +10,31 @@ export function MainDashboardScreen() {
     <>
       <Header />
       <Center>
-        <Box w={"80%"} p={"3.25rem 5.125rem 1.5rem"}>
+        <Box p={"3.25rem 5.125rem 1.5rem"}>
           <MainDashboardTitle userName="Mariana" />
           <Flex
             mt={"1.5rem"}
             gap={"1.5rem"}
             justifyContent={"center"}
-            flexWrap={"wrap"}
+            // flexWrap={"wrap"}
           >
-            <Box>
-              <MainDashboardOptionMenuButton
-                buttonText="Conferir locais"
-                icon={FestivalIcon}
-                text="Confira todo os locais cadastrados!"
-                title="Locais"
-                bgColor="#2F3B28"
-                href="/locais"
-              />
-            </Box>
-            <Box>
-              <MainDashboardOptionMenuButton
-                buttonText="Conferir eventos"
-                icon={EventIcon}
-                text="Confira todo os eventos cadastrados!"
-                title="Eventos"
-                bgColor="#461527"
-                href="/eventos"
-              />
-            </Box>
+            <MainDashboardOptionMenuButton
+              buttonText="Conferir locais"
+              icon={FestivalIcon}
+              text="Confira todos os locais cadastrados!"
+              title="Locais"
+              bgColor="#2F3B28"
+              href="/locais"
+            />
+
+            <MainDashboardOptionMenuButton
+              buttonText="Conferir eventos"
+              icon={EventIcon}
+              text="Confira todos os eventos cadastrados!"
+              title="Eventos"
+              bgColor="#461527"
+              href="/eventos"
+            />
           </Flex>
         </Box>
       </Center>

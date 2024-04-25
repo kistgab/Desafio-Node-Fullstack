@@ -21,13 +21,19 @@ export function MainDashboardOptionMenuButton({
   href,
 }: Props) {
   return (
-    <Box bg={bgColor} p={"1.5rem"} borderRadius={"16px"}>
+    <Box
+      w={"100%"}
+      bg={bgColor}
+      p={"1.5rem"}
+      borderRadius={"16px"}
+      maxW={"600px"}
+    >
       <Flex
         justifyContent={"space-between"}
         alignItems={"center"}
         gap={"1.5rem"}
       >
-        <Box flex={2}>
+        <Box flex={2} mr={"16px"}>
           <Flex gap={".5rem"}>
             <Image sizes={"sm"} src={icon} alt={`${title} icon`} />
             <Heading>{title}</Heading>
