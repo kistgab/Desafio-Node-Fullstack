@@ -3,12 +3,14 @@ import {
   Box,
   Button,
   Center,
+  Heading,
   IconButton,
   Stack,
   Table,
   TableContainer,
   Tbody,
   Td,
+  Text,
   Th,
   Thead,
   Tr,
@@ -25,6 +27,11 @@ type IdObject = {
   id: string;
 };
 
+type Events = {
+  onDelete?: (id: string, refreshScreen: () => void) => Promise<void>;
+  onEdit?: (id: string) => Promise<void>;
+};
+
 type Props<T extends IdObject> = {
   breadcrumbPages: BreadcrumbPage[];
   currentPageName: string;
@@ -36,11 +43,10 @@ type Props<T extends IdObject> = {
     onPageChange: (page: number) => void;
   };
   events?: Events;
-};
-
-type Events = {
-  onDelete?: (id: string, refreshScreen: () => void) => Promise<void>;
-  onEdit?: (id: string) => Promise<void>;
+  texts: {
+    title: string;
+    caption: string;
+  };
 };
 
 export function GenericTableScreen<T extends IdObject>({
@@ -51,6 +57,7 @@ export function GenericTableScreen<T extends IdObject>({
   columsHeaderNames,
   events,
   pagination,
+  texts,
 }: Props<T>) {
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -67,6 +74,14 @@ export function GenericTableScreen<T extends IdObject>({
             pages={breadcrumbPages}
             currentPageName={currentPageName}
           />
+          <Box mb={"1.625rem"}>
+            <Heading as={"h1"} size={"lg"} mt={"1.25rem"}>
+              {texts.title}
+            </Heading>
+            <Text as={"h2"} size={"sm"} mt={"1.25rem"}>
+              {texts.caption}
+            </Text>
+          </Box>
           <TableContainer>
             <Table variant={"striped"}>
               <Thead>
@@ -97,7 +112,16 @@ function mapTableRows<T extends IdObject>(
     return (
       <Tr key={data.id}>
         {dataPropertiesToShow.map((property) => {
-          return <Td key={String(property)}>{String(data[property])}</Td>;
+          return (
+            <Td
+              textOverflow={"ellipsis"}
+              overflow={"hidden"}
+              maxW={"310px"}
+              key={String(property)}
+            >
+              {String(data[property])}
+            </Td>
+          );
         })}
         {events && (
           <Td>

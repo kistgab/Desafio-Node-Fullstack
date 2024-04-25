@@ -1,8 +1,12 @@
+import { useGetPlaces } from "@hooks/api/use-get-places";
 import { GenericTableScreen } from "@ui/screens/generic-table/generic-table.screen";
+import { PlaceMapper } from "@utils/mappers/Place.mapper";
 import { useState } from "react";
 
 export function PlacesScreen() {
   const [page, setPage] = useState(1);
+  const { data: paginatedData, error, loading } = useGetPlaces(page);
+  const mappedData = paginatedData?.data.map(PlaceMapper.mapPlaceDataSummary);
   return (
     <GenericTableScreen<PlaceDataSummary>
       breadcrumbPages={[
@@ -24,70 +28,31 @@ export function PlacesScreen() {
         "gates",
         "updatedAt",
       ]}
-      data={placeData}
+      data={mappedData || []}
       events={{
         onDelete,
         onEdit,
       }}
       pagination={{
-        totalPages: 10,
+        totalPages: paginatedData?.pageCount || 1,
         onPageChange: setPage,
+      }}
+      texts={{
+        caption: "Confira a lista de todos os locais cadastrados",
+        title: "Locais",
       }}
     />
   );
 }
 
-type PlaceDataSummary = {
+export type PlaceDataSummary = {
   id: string;
   name: string;
   address: string;
   cityAndState: string;
   gates: string;
-  updatedAt: string;
+  updatedAt?: string;
 };
-
-const placeData: PlaceDataSummary[] = [
-  {
-    id: "uuid-daf-999-adfs",
-    name: "Morumbis",
-    address: "Avenida Francisco Matarazzo, 1705 - Água Branca",
-    cityAndState: "São Paulo; SP",
-    gates: "A,B,C,D,E,F,G,H,I,J,K",
-    updatedAt: "05/10/23",
-  },
-  {
-    id: "uuid-daf-888-adfs",
-    name: "Allianz Parque",
-    address: "Avenida Francisco Matarazzo, 1705 - Água Branca",
-    cityAndState: "São Paulo; SP",
-    gates: "A,B,C,D,E,F,G,H,I,J,K",
-    updatedAt: "05/10/23",
-  },
-  {
-    id: "uuid-daf-777-adfs",
-    name: "Neo Química Arena",
-    address: "Avenida Francisco Matarazzo, 1705 - Água Branca",
-    cityAndState: "São Paulo; SP",
-    gates: "A,B,C,D,E,F,G,H,I,J,K",
-    updatedAt: "05/10/23",
-  },
-  {
-    id: "uuid-daf-666-adfs",
-    name: "Audio Club.",
-    address: "Avenida Francisco Matarazzo, 1705 - Água Branca",
-    cityAndState: "São Paulo; SP",
-    gates: "A,B,C,D,E,F,G,H,I,J,K",
-    updatedAt: "05/10/23",
-  },
-  {
-    id: "uuid-daf-555-adfs",
-    name: "Audio Club.",
-    address: "Avenida Francisco Matarazzo, 1705 - Água Branca",
-    cityAndState: "São Paulo; SP",
-    gates: "A,B,C,D,E,F,G,H,I,J,K",
-    updatedAt: "05/10/23",
-  },
-];
 
 function onDelete(id: string, refreshScreen: () => void): Promise<void> {
   console.log(`Deleted id: ${id}`);
