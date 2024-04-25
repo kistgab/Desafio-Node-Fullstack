@@ -1,10 +1,14 @@
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { DeleteIcon, EditIcon, Search2Icon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
   Center,
+  Flex,
   Heading,
   IconButton,
+  Input,
+  InputGroup,
+  InputLeftElement,
   Stack,
   Table,
   TableContainer,
@@ -21,7 +25,8 @@ import {
   PageBreadcrumbs,
 } from "@ui/components/page-breadcrumbs/page-breadcrumbs.component";
 import { ScreenContentWrapper } from "@ui/components/screen-content-wrapper/screen-content-wrapper.component";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 type IdObject = {
   id: string;
@@ -30,11 +35,14 @@ type IdObject = {
 type Events = {
   onDelete?: (id: string) => Promise<void>;
   onEdit?: (id: string) => Promise<void>;
+  onCreateHref: string;
 };
 
 type Texts = {
+  searchBarPlaceholder: string;
   title: string;
   caption: string;
+  addButtonLabel: string;
 };
 
 type PropsPagination = {
@@ -64,6 +72,7 @@ export function GenericTableScreen<T extends IdObject>({
   texts,
 }: Props<T>) {
   const [currentPage, setCurrentPage] = useState(1);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     pagination.onPageChange(currentPage);
@@ -76,14 +85,44 @@ export function GenericTableScreen<T extends IdObject>({
         <Box w={"100%"} h={"100%"} mt={"2.375rem"}>
           {getPageCrumbreads(breadcrumbPages, currentPageName)}
           {getHeader(texts)}
-          <TableContainer>
-            <Table variant={"striped"}>
-              <Thead>
-                <Tr>{mapColumsHeaders(columsHeaderNames)}</Tr>
-              </Thead>
-              <Tbody>{mapTableRows(data, dataPropertiesToShow, events)}</Tbody>
-            </Table>
-          </TableContainer>
+          <Box>
+            <Flex justifyContent={"space-between"} mb={"1.5rem"}>
+              <InputGroup maxW={"400px"}>
+                <InputLeftElement>
+                  <Search2Icon />
+                </InputLeftElement>
+                <Input
+                  placeholder={texts.searchBarPlaceholder}
+                  value={search}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setSearch(e.target.value)
+                  }
+                />
+              </InputGroup>
+
+              {events?.onCreateHref && (
+                <Link to={events.onCreateHref}>
+                  <Button
+                    bg={"#EBF0F9"}
+                    color={"#333B49"}
+                    _hover={{ bg: "#d4d8e0" }}
+                  >
+                    {texts.addButtonLabel}
+                  </Button>
+                </Link>
+              )}
+            </Flex>
+            <TableContainer>
+              <Table variant={"striped"}>
+                <Thead>
+                  <Tr>{mapColumsHeaders(columsHeaderNames)}</Tr>
+                </Thead>
+                <Tbody>
+                  {mapTableRows(data, dataPropertiesToShow, events)}
+                </Tbody>
+              </Table>
+            </TableContainer>
+          </Box>
           {getPagination(pagination?.totalPages, currentPage, setCurrentPage)}
         </Box>
       </ScreenContentWrapper>

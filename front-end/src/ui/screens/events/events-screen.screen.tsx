@@ -35,6 +35,7 @@ export function EventsScreen() {
       events={{
         onDelete,
         onEdit,
+        onCreateHref: "/eventos/criar",
       }}
       pagination={{
         totalPages: paginatedData?.pageCount || 1,
@@ -43,6 +44,8 @@ export function EventsScreen() {
       texts={{
         caption: "Confira a lista de todos os eventos cadastrados",
         title: "Eventos",
+        addButtonLabel: "Adicionar evento",
+        searchBarPlaceholder: "Pesquise por nome do evento",
       }}
     />
   );
@@ -58,9 +61,8 @@ export type EventDataSummary = {
   startsAt: string;
 };
 
-function onDelete(id: string, refreshScreen: () => void): Promise<void> {
+function onDelete(id: string): Promise<void> {
   console.log(`Deleted id: ${id}`);
-  refreshScreen();
   return Promise.resolve();
 }
 

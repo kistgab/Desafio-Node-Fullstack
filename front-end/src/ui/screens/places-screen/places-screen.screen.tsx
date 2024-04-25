@@ -32,6 +32,7 @@ export function PlacesScreen() {
       events={{
         onDelete,
         onEdit,
+        onCreateHref: "/locais/criar",
       }}
       pagination={{
         totalPages: paginatedData?.pageCount || 1,
@@ -40,6 +41,8 @@ export function PlacesScreen() {
       texts={{
         caption: "Confira a lista de todos os locais cadastrados",
         title: "Locais",
+        addButtonLabel: "Adicionar local",
+        searchBarPlaceholder: "Pesquise por nome ou apelido do local",
       }}
     />
   );
@@ -54,9 +57,8 @@ export type PlaceDataSummary = {
   updatedAt?: string;
 };
 
-function onDelete(id: string, refreshScreen: () => void): Promise<void> {
+function onDelete(id: string): Promise<void> {
   console.log(`Deleted id: ${id}`);
-  refreshScreen();
   return Promise.resolve();
 }
 
