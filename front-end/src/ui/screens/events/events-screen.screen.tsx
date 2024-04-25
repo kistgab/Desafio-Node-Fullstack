@@ -12,9 +12,9 @@ export function EventsScreen() {
     <GenericTableScreen<EventDataSummary>
       breadcrumbPages={[
         { name: "Home", href: "/" },
-        { name: "Locais", href: "/locais" },
+        { name: "Eventos", href: "/eventos" },
       ]}
-      currentPageName="Locais"
+      currentPageName="Eventos"
       columsHeaderNames={[
         "Evento",
         "Tipo",
@@ -41,8 +41,8 @@ export function EventsScreen() {
         onPageChange: setPage,
       }}
       texts={{
-        caption: "Confira a lista de todos os locais cadastrados",
-        title: "Locais",
+        caption: "Confira a lista de todos os eventos cadastrados",
+        title: "Eventos",
       }}
     />
   );
