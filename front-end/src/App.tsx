@@ -1,17 +1,13 @@
-import { useState } from "react";
+import theme from "@chakra-config/theme";
+import { ChakraProvider } from "@chakra-ui/react";
+import { router } from "@router/router";
+import { RouterProvider } from "react-router-dom";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <button
-        style={{ width: 200, background: "green", color: "white", height: 50 }}
-        onClick={() => setCount(count + 1)}
-      >
-        Contador {count}
-      </button>
-    </>
+    <ChakraProvider theme={theme}>
+      <RouterProvider router={router} />
+    </ChakraProvider>
   );
 }
 

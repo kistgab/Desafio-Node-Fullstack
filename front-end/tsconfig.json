@@ -24,6 +24,8 @@
 
     "paths": {
       "@router/*": ["./router/*"],
+      "@assets/*": ["./assets/*"],
+      "@chakra-config/*": ["./chakra-config/*"],
       "@ui/*": ["./ui/*"],
       "@hooks/*": ["./hooks/*"],
       "@api/*": ["./api/*"],
