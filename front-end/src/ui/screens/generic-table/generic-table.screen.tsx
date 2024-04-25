@@ -28,8 +28,18 @@ type IdObject = {
 };
 
 type Events = {
-  onDelete?: (id: string, refreshScreen: () => void) => Promise<void>;
+  onDelete?: (id: string) => Promise<void>;
   onEdit?: (id: string) => Promise<void>;
+};
+
+type Texts = {
+  title: string;
+  caption: string;
+};
+
+type PropsPagination = {
+  totalPages: number;
+  onPageChange: (page: number) => void;
 };
 
 type Props<T extends IdObject> = {
@@ -38,15 +48,9 @@ type Props<T extends IdObject> = {
   data: T[];
   dataPropertiesToShow: (keyof T)[];
   columsHeaderNames: string[];
-  pagination: {
-    totalPages: number;
-    onPageChange: (page: number) => void;
-  };
+  pagination: PropsPagination;
   events?: Events;
-  texts: {
-    title: string;
-    caption: string;
-  };
+  texts: Texts;
 };
 
 export function GenericTableScreen<T extends IdObject>({
@@ -70,18 +74,8 @@ export function GenericTableScreen<T extends IdObject>({
       <Header />
       <ScreenContentWrapper variant="center">
         <Box w={"100%"} h={"100%"} mt={"2.375rem"}>
-          <PageBreadcrumbs
-            pages={breadcrumbPages}
-            currentPageName={currentPageName}
-          />
-          <Box mb={"1.625rem"}>
-            <Heading as={"h1"} size={"lg"} mt={"1.25rem"}>
-              {texts.title}
-            </Heading>
-            <Text as={"h2"} size={"sm"} mt={"1.25rem"}>
-              {texts.caption}
-            </Text>
-          </Box>
+          {getPageCrumbreads(breadcrumbPages, currentPageName)}
+          {getHeader(texts)}
           <TableContainer>
             <Table variant={"striped"}>
               <Thead>
@@ -93,6 +87,32 @@ export function GenericTableScreen<T extends IdObject>({
           {getPagination(pagination?.totalPages, currentPage, setCurrentPage)}
         </Box>
       </ScreenContentWrapper>
+    </>
+  );
+}
+
+function getPageCrumbreads(
+  breadcrumbPages: BreadcrumbPage[],
+  currentPageName: string
+) {
+  return (
+    <PageBreadcrumbs
+      pages={breadcrumbPages}
+      currentPageName={currentPageName}
+    />
+  );
+}
+function getHeader(texts: Texts) {
+  return (
+    <>
+      <Box mb={"1.625rem"}>
+        <Heading as={"h1"} size={"lg"} mt={"1.25rem"}>
+          {texts.title}
+        </Heading>
+        <Text as={"h2"} size={"sm"} mt={"1.25rem"}>
+          {texts.caption}
+        </Text>
+      </Box>
     </>
   );
 }
@@ -132,7 +152,7 @@ function mapTableRows<T extends IdObject>(
                   icon={<DeleteIcon />}
                   fontSize={"16px"}
                   variant={"ghost"}
-                  onClick={() => events.onDelete!(data.id, fetchData)}
+                  onClick={() => events.onDelete!(data.id)}
                 />
               )}
               {events.onEdit && (
@@ -151,8 +171,6 @@ function mapTableRows<T extends IdObject>(
     );
   });
 }
-
-function fetchData(): void {}
 
 function getPagination(
   totalPages: number,
