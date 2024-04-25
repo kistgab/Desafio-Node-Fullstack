@@ -1,5 +1,5 @@
 import { OutputGetPlacesDto } from "@hooks/api/use-get-places";
-import { PlaceDataSummary } from "@ui/screens/places-screen/places-screen.screen";
+import { PlaceDataSummary } from "@ui/screens/places/places.screen";
 import { toBrazillianStringDate } from "@utils/Helpers";
 
 export abstract class PlaceMapper {
