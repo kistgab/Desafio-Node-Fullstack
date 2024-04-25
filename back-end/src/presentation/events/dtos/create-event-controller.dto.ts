@@ -18,10 +18,10 @@ class DurationDto {
 }
 
 class ContactDto {
-  @IsEmail()
+  @IsMobilePhone()
   phone?: string;
 
-  @IsMobilePhone()
+  @IsEmail()
   email: string;
 }
 
