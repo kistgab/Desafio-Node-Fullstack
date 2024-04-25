@@ -2,18 +2,20 @@ import {
   Box,
   Flex,
   Heading,
-  Link,
+  Link as LinkChakra,
   Table,
   TableContainer,
   Tbody,
   Td,
 } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 type Props<T> = {
   data: T[];
   keyProperty: keyof T;
   propertiesToShow: (keyof T)[];
   title: string;
+  seeAllUrl: string;
 };
 
 export function SmallTable<T>({
@@ -21,6 +23,7 @@ export function SmallTable<T>({
   propertiesToShow,
   title,
   keyProperty,
+  seeAllUrl,
 }: Props<T>) {
   return (
     <Box
@@ -34,8 +37,10 @@ export function SmallTable<T>({
         <Heading as={"h1"} size="md" mb={"1.5rem"}>
           {title}
         </Heading>
-        <Link color={"#6D99FB"} textDecoration={"underline"}>
-          Ver todos
+        <Link to={seeAllUrl}>
+          <LinkChakra color={"#6D99FB"} textDecoration={"underline"}>
+            Ver todos
+          </LinkChakra>
         </Link>
       </Flex>
       <TableContainer>

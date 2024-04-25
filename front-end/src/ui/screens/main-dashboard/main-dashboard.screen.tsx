@@ -30,6 +30,7 @@ export function MainDashboardScreen() {
                 propertiesToShow={placesPropertiesToShow}
                 title="Últimos locais adicionados"
                 keyProperty={"name"}
+                seeAllUrl="/locais"
               />
             </Flex>
             <Flex w={"100%"} flexDir={"column"} gap={"2rem"}>
@@ -46,6 +47,7 @@ export function MainDashboardScreen() {
                 propertiesToShow={eventsPropertiesToShow}
                 title="Últimos eventos adicionados"
                 keyProperty={"name"}
+                seeAllUrl="/eventos"
               />
             </Flex>
           </Flex>
