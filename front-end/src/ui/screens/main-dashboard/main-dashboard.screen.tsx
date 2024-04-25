@@ -1,8 +1,9 @@
 import EventIcon from "@assets/icons/event-icon.svg";
 import FestivalIcon from "@assets/icons/festival-icon.svg";
 import HomeBackgroundImage from "@assets/images/home-background-image.png";
-import { Box, Center, Flex } from "@chakra-ui/layout";
+import { Box, Flex } from "@chakra-ui/layout";
 import { Header } from "@ui/components/header/header.component";
+import { ScreenContentWrapper } from "@ui/components/screen-content-wrapper/screen-content-wrapper.component";
 import { SmallTable } from "@ui/components/small-table/small-table.component";
 import { MainDashboardTitle } from "@ui/screens/main-dashboard/components/header/main-dashboard-title.component";
 import { MainDashboardOptionMenuButton } from "@ui/screens/main-dashboard/components/option-menu-button/main-dashboard-option-menu-button.component";
@@ -11,7 +12,7 @@ export function MainDashboardScreen() {
   return (
     <Box bg={HomeBackgroundImage}>
       <Header />
-      <Center p={"3.25rem 5.125rem 1.5rem"}>
+      <ScreenContentWrapper variant="center">
         <Box w={"100%"} maxW={"1300px"}>
           <MainDashboardTitle userName="Mariana" />
           <Flex mt={"1.5rem"} gap={"1.5rem"} justifyContent={"space-between"}>
@@ -28,7 +29,7 @@ export function MainDashboardScreen() {
                 data={placesData}
                 propertiesToShow={placesPropertiesToShow}
                 title="Últimos locais adicionados"
-                keyProperty={"id"}
+                keyProperty={"name"}
               />
             </Flex>
             <Flex w={"100%"} flexDir={"column"} gap={"2rem"}>
@@ -44,12 +45,12 @@ export function MainDashboardScreen() {
                 data={eventsData}
                 propertiesToShow={eventsPropertiesToShow}
                 title="Últimos eventos adicionados"
-                keyProperty={"id"}
+                keyProperty={"name"}
               />
             </Flex>
           </Flex>
         </Box>
-      </Center>
+      </ScreenContentWrapper>
     </Box>
   );
 }
@@ -63,19 +64,19 @@ type PlaceDto = {
 
 const placesData: PlaceDto[] = [
   {
-    id: "randomUUID",
+    id: "randomUUID12",
     name: "Morumbis",
     address: "Avenida Francisco Xavier Machado",
     entries: ["C", "D", "E", "F", "G", "H", "I", "J", "K"],
   },
   {
-    id: "randomUUID2",
+    id: "randomUUID212",
     name: "Allianz Parque",
     address: "Avenida Francisco Xavier Machado",
     entries: ["3", "4", "5", "6", "7", "8", "9", "10"],
   },
   {
-    id: "randomUUID3",
+    id: "randomUUID332",
     name: "Neo Química Arena",
     address: "Avenida Francisco Xavier Machado",
     entries: ["email@chakra-ui.com"],
@@ -97,19 +98,19 @@ type EventDto = {
 
 const eventsData: EventDto[] = [
   {
-    id: "randomUUID",
+    id: "randomUUID12312",
     name: "Final Copa América",
     tag: "Futebol",
     placeName: "Morumbis",
   },
   {
-    id: "randomUUID2",
+    id: "randomUUID21321",
     name: "Semi Final Copa América",
     tag: "Futebol",
     placeName: "Morumbis",
   },
   {
-    id: "randomUUID3",
+    id: "randomUUID312312",
     name: "Love on tour - Harry Styles",
     tag: "Show",
     placeName: "Morumbis",

@@ -53,20 +53,22 @@ function mapToTableRow<T>(
   keyProperty: keyof T
 ) {
   {
-    return data.map((item) => (
-      <tr>
-        {propertiesToShow.map((property) => (
-          <Td
-            h={"3.25rem"}
-            maxW={"125px"}
-            textOverflow={"ellipsis"}
-            overflow={"hidden"}
-            key={String(item[keyProperty])}
-          >
-            {String(item[property])}
-          </Td>
-        ))}
-      </tr>
-    ));
+    return data.map((item) => {
+      return (
+        <tr key={String(item[keyProperty])}>
+          {propertiesToShow.map((property) => (
+            <Td
+              h={"3.25rem"}
+              maxW={"125px"}
+              textOverflow={"ellipsis"}
+              overflow={"hidden"}
+              key={String(property)}
+            >
+              {String(item[property])}
+            </Td>
+          ))}
+        </tr>
+      );
+    });
   }
 }
