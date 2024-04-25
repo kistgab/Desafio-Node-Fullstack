@@ -1,12 +1,39 @@
+import { useToast } from "@chakra-ui/react";
+import { useDeleteEvent } from "@hooks/api/use-delete-event";
 import { useGetEvents } from "@hooks/api/use-get-events";
 import { GenericTableScreen } from "@ui/screens/generic-table/generic-table.screen";
 import { EventType } from "@utils/event-type.enum";
 import { EventMapper } from "@utils/mappers/Event.mapper";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function EventsScreen() {
   const [page, setPage] = useState(1);
-  const { data: paginatedData, error, loading } = useGetEvents(page);
+  const { data: paginatedData, enableTrigger: refreshEvents } =
+    useGetEvents(page);
+  const { deleteEvent, finished: finishedDeleteEvent } = useDeleteEvent();
+  const toast = useToast();
+
+  useEffect(() => {
+    if (!finishedDeleteEvent) return;
+    toast({
+      title: "Sucesso",
+      status: "success",
+      description: "O evento foi apagado",
+      position: "bottom-left",
+    });
+    refreshEvents((trigger) => !trigger);
+  }, [finishedDeleteEvent]);
+
+  function onDelete(id: string): Promise<void> {
+    deleteEvent(id);
+    return Promise.resolve();
+  }
+
+  function onEdit(id: string): Promise<void> {
+    console.log(`Updated id: ${id}`);
+    return Promise.resolve();
+  }
+
   const mappedData = paginatedData?.data.map(EventMapper.mapEventDataSummary);
   return (
     <GenericTableScreen<EventDataSummary>
@@ -60,13 +87,3 @@ export type EventDataSummary = {
   gates: string;
   startsAt: string;
 };
-
-function onDelete(id: string): Promise<void> {
-  console.log(`Deleted id: ${id}`);
-  return Promise.resolve();
-}
-
-function onEdit(id: string): Promise<void> {
-  console.log(`Updated id: ${id}`);
-  return Promise.resolve();
-}

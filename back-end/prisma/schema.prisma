@@ -68,7 +68,7 @@ model TicketGate {
 model Event {
   id            String    @id @default(uuid())
   name          String
-  place         Place     @relation(fields: [place_id], references: [id])
+  place         Place     @relation(fields: [place_id], references: [id], onDelete: Cascade)
   place_id      String
   startDate     DateTime
   endDate       DateTime

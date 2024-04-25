@@ -2,7 +2,11 @@ import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { axiosInstance } from "libs/axios/axios.instance";
 import { useEffect, useState } from "react";
 
-export function useFetchData<T>(url: string, params?: AxiosRequestConfig) {
+export function useFetchData<T>(
+  url: string,
+  params?: AxiosRequestConfig,
+  trigger?: boolean
+) {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -21,7 +25,7 @@ export function useFetchData<T>(url: string, params?: AxiosRequestConfig) {
     };
 
     fetchData();
-  }, [params, url]);
+  }, [params, url, trigger]);
 
   return { data, loading, error };
 }
