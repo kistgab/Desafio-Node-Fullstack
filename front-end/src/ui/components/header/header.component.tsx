@@ -1,14 +1,21 @@
 import OnTreeLogoSvg from "@assets/logos/ontree-logo.svg";
 import { Avatar } from "@chakra-ui/avatar";
 import { Image } from "@chakra-ui/image";
-import { Box, Flex, Link, Text, WrapItem } from "@chakra-ui/layout";
+import { Flex, Link, Text, WrapItem } from "@chakra-ui/layout";
+import { NavLink } from "react-router-dom";
 
 export function Header() {
   return (
-    <Flex padding={"1.5rem 6.75rem"} justifyContent={"space-between"}>
-      <Box>
-        <Image src={OnTreeLogoSvg} />
-      </Box>
+    <Flex
+      padding={"1.5rem 0"}
+      justifyContent={"space-between"}
+      maxW={"1300px"}
+      ml={"auto"}
+      mr={"auto"}
+    >
+      <NavLink to={"/"}>
+        <Image src={OnTreeLogoSvg} alt="OnEntree logo" />
+      </NavLink>
 
       <Flex flex={1} ml={"5.625rem"} gap={"1.5rem"}>
         <Link href="/">Home</Link>
