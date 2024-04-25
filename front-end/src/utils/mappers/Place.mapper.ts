@@ -1,11 +1,11 @@
 import { OutputGetPlacesDto } from "@hooks/api/use-get-places";
 import { PlaceDataSummary } from "@ui/screens/places-screen/places-screen.screen";
+import { toBrazillianStringDate } from "@utils/Helpers";
 
 export abstract class PlaceMapper {
   public static mapPlaceDataSummary(
     data: OutputGetPlacesDto
   ): PlaceDataSummary {
-    console.log("entrou no mapper", data);
     return {
       id: data.id,
       name: data.name,
@@ -15,11 +15,4 @@ export abstract class PlaceMapper {
       updatedAt: toBrazillianStringDate(data.updatedAt || ""),
     };
   }
-}
-function toBrazillianStringDate(date: string): string {
-  return new Date(date).toLocaleDateString("pt-BR", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "2-digit",
-  });
 }
