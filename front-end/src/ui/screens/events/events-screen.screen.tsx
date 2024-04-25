@@ -8,8 +8,11 @@ import { useEffect, useState } from "react";
 
 export function EventsScreen() {
   const [page, setPage] = useState(1);
-  const { data: paginatedData, enableTrigger: refreshEvents } =
-    useGetEvents(page);
+  const [searchArgument, setSearchArgument] = useState("");
+  const { data: paginatedData, enableTrigger: refreshEvents } = useGetEvents(
+    page,
+    searchArgument
+  );
   const { deleteEvent, finished: finishedDeleteEvent } = useDeleteEvent();
   const toast = useToast();
 
@@ -74,6 +77,7 @@ export function EventsScreen() {
         addButtonLabel: "Adicionar evento",
         searchBarPlaceholder: "Pesquise por nome do evento",
       }}
+      setSearchArgument={setSearchArgument}
     />
   );
 }

@@ -7,8 +7,11 @@ import { useEffect, useState } from "react";
 
 export function PlacesScreen() {
   const [page, setPage] = useState(1);
-  const { data: paginatedData, enableTrigger: refreshPlaces } =
-    useGetPlaces(page);
+  const [searchArgument, setSearchArgument] = useState("");
+  const { data: paginatedData, enableTrigger: refreshPlaces } = useGetPlaces(
+    page,
+    searchArgument
+  );
   const { deletePlace, finished: finishedDeletePlace } = useDeletePlace();
   const toast = useToast();
 
@@ -71,6 +74,7 @@ export function PlacesScreen() {
         addButtonLabel: "Adicionar local",
         searchBarPlaceholder: "Pesquise por nome ou apelido do local",
       }}
+      setSearchArgument={setSearchArgument}
     />
   );
 }

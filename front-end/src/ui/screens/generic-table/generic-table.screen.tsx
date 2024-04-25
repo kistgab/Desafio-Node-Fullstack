@@ -59,6 +59,7 @@ type Props<T extends IdObject> = {
   pagination: PropsPagination;
   events?: Events;
   texts: Texts;
+  setSearchArgument: (arg: string) => void;
 };
 
 export function GenericTableScreen<T extends IdObject>({
@@ -70,6 +71,7 @@ export function GenericTableScreen<T extends IdObject>({
   events,
   pagination,
   texts,
+  setSearchArgument,
 }: Props<T>) {
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
@@ -77,6 +79,13 @@ export function GenericTableScreen<T extends IdObject>({
   useEffect(() => {
     pagination.onPageChange(currentPage);
   }, [currentPage]);
+
+  useEffect(() => {
+    const delayDebounce = setTimeout(() => {
+      setSearchArgument(search);
+    }, 500);
+    return () => clearTimeout(delayDebounce);
+  }, [search]);
 
   return (
     <>
