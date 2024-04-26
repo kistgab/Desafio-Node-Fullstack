@@ -25,6 +25,22 @@ export class PrismaUpdatePlaceRepository implements UpdatePlaceRepository {
         created_at: place.createdAt,
         nickname: place.nickname,
         updated_at: place.updatedAt,
+        entries: {
+          deleteMany: {},
+          createMany: {
+            data: place.entries.map((entry) => ({
+              name: entry,
+            })),
+          },
+        },
+        ticket_gates: {
+          deleteMany: {},
+          createMany: {
+            data: place.ticketGates.map((entry) => ({
+              name: entry,
+            })),
+          },
+        },
       },
       where: { id: place.id },
     });
