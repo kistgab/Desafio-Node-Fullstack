@@ -1,15 +1,25 @@
-import { Box, Button, Divider, Flex, SimpleGrid, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  SimpleGrid,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
+import { useCreatePlace } from "@hooks/api/use-create-place";
 import { FormField } from "@ui/components/form-field/form-field.component";
 import { Header } from "@ui/components/header/header.component";
 import { MultipleValuesInput } from "@ui/components/multiple-values-input/multiple-values-input.component";
 import { ScreenContentWrapper } from "@ui/components/screen-content-wrapper/screen-content-wrapper.component";
 import { BRAZIL_STATES } from "@utils/Helpers";
+import { PlaceMapper } from "@utils/mappers/Place.mapper";
 import { PlaceType } from "@utils/place-type.enum";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 
-type Inputs = {
+export type CreatePlaceFormInputs = {
   name: string;
   nickname?: string;
   type: PlaceType;
@@ -28,14 +38,39 @@ export function CreatePlaceScreen() {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-  } = useForm<Inputs>();
+  } = useForm<CreatePlaceFormInputs>();
   const [entries, setEntries] = useState<string[]>([]);
   const [gates, setGates] = useState<string[]>([]);
+  const { createPlace, data, error: creatingError } = useCreatePlace();
+  const toast = useToast();
 
-  function onSubmit(data: Inputs) {
-    console.log("data", data);
-    console.log("entries", entries);
-    console.log("gates", gates);
+  useEffect(() => {
+    if (data) {
+      toast({
+        title: "Sucesso",
+        status: "success",
+        description: "Um novo local foi adicionado",
+        position: "bottom-left",
+      });
+      redirect("/locais");
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (creatingError) {
+      toast({
+        title: "Errro",
+        status: "error",
+        description: "Não foi possível salvar a edição",
+        position: "bottom-left",
+      });
+    }
+  }, [creatingError]);
+
+  function onSubmit(data: CreatePlaceFormInputs) {
+    const request = PlaceMapper.mapRequestCreatePlaceDto(data, entries, gates);
+    console.log(request);
+    createPlace(request);
   }
 
   return (
@@ -48,7 +83,7 @@ export function CreatePlaceScreen() {
               Informações básicas
             </Text>
             <SimpleGrid columns={2} spacing={10}>
-              <FormField<Inputs>
+              <FormField<CreatePlaceFormInputs>
                 fieldId="name"
                 errors={errors}
                 placeholder="Informe o nome do local"
@@ -56,14 +91,14 @@ export function CreatePlaceScreen() {
                 isRequired
                 label="Nome do local"
               />
-              <FormField<Inputs>
+              <FormField<CreatePlaceFormInputs>
                 fieldId="nickname"
                 errors={errors}
                 placeholder="Informe um apelido (caso exista)"
                 register={register}
                 label="Apelido"
               />
-              <FormField<Inputs>
+              <FormField<CreatePlaceFormInputs>
                 fieldId="type"
                 errors={errors}
                 placeholder="Selecione um tipo"
@@ -77,12 +112,19 @@ export function CreatePlaceScreen() {
                   { label: "Outro", value: PlaceType.Other },
                 ]}
               />
-              <FormField<Inputs>
+              <FormField<CreatePlaceFormInputs>
                 fieldId="cnpj"
                 errors={errors}
                 placeholder="Informe o cnpj (caso exista)"
                 register={register}
                 label="CNPJ"
+                type="number"
+                otherRegisterValidations={{
+                  pattern: {
+                    value: /^\d{2}\d{3}\d{3}\d{4}\d{2}$/,
+                    message: "CNPJ inválido (digite apenas números)",
+                  },
+                }}
               />
             </SimpleGrid>
           </Box>
@@ -94,7 +136,7 @@ export function CreatePlaceScreen() {
               Localização
             </Text>
             <SimpleGrid columns={2} spacing={10}>
-              <FormField<Inputs>
+              <FormField<CreatePlaceFormInputs>
                 fieldId="city"
                 errors={errors}
                 placeholder="Informe a Cidade"
@@ -102,7 +144,7 @@ export function CreatePlaceScreen() {
                 isRequired
                 label="Cidade"
               />
-              <FormField<Inputs>
+              <FormField<CreatePlaceFormInputs>
                 fieldId="state"
                 errors={errors}
                 placeholder="Selecione um estado"
@@ -115,15 +157,21 @@ export function CreatePlaceScreen() {
                 }))}
                 label="Estado"
               />
-              <FormField<Inputs>
+              <FormField<CreatePlaceFormInputs>
                 fieldId="cep"
                 errors={errors}
                 placeholder="Informe o CEP"
                 register={register}
                 isRequired
                 label="CEP"
+                otherRegisterValidations={{
+                  pattern: {
+                    value: /^[0-9]{5}[0-9]{3}$/,
+                    message: "CEP inválido (digite apenas números)",
+                  },
+                }}
               />
-              <FormField<Inputs>
+              <FormField<CreatePlaceFormInputs>
                 fieldId="address"
                 errors={errors}
                 placeholder="Informe o Endereço"
@@ -131,7 +179,7 @@ export function CreatePlaceScreen() {
                 isRequired
                 label="Endereço"
               />
-              <FormField<Inputs>
+              <FormField<CreatePlaceFormInputs>
                 fieldId="complement"
                 errors={errors}
                 placeholder="Informe o complemento"
@@ -148,20 +196,33 @@ export function CreatePlaceScreen() {
               Contato
             </Text>
             <SimpleGrid columns={2} spacing={10}>
-              <FormField<Inputs>
+              <FormField<CreatePlaceFormInputs>
                 fieldId="email"
                 errors={errors}
                 placeholder="Informe um e-mail"
                 register={register}
                 isRequired
                 label="E-mail"
+                otherRegisterValidations={{
+                  pattern: {
+                    value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+                    message: "E-mail inválido",
+                  },
+                }}
               />
-              <FormField<Inputs>
+              <FormField<CreatePlaceFormInputs>
                 fieldId="phone"
                 errors={errors}
                 placeholder="Informe um telefone"
                 register={register}
                 label="Telefone"
+                otherRegisterValidations={{
+                  pattern: {
+                    value:
+                      /(?:(^\+\d{2})?)(?:([1-9]{2})|([0-9]{3})?)(\d{4,5})(\d{4})/,
+                    message: "Telefone inválido",
+                  },
+                }}
               />
             </SimpleGrid>
           </Box>
@@ -191,6 +252,14 @@ export function CreatePlaceScreen() {
           </Box>
 
           <Divider m={"1.5rem 0"} />
+
+          {creatingError && (
+            <Box>
+              <Text color={"#F6285F"}>
+                Erro recebido: {JSON.stringify(creatingError)}
+              </Text>
+            </Box>
+          )}
 
           <Flex justifyContent={"flex-end"} gap={"1.5rem"}>
             <Link to={"/locais"}>
