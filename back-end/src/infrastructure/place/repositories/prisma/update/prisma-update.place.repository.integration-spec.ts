@@ -17,9 +17,6 @@ describe('PrismaUpdate Place Repository', () => {
   beforeEach(async () => {
     await clearDatabase(prismaClient);
     await prismaClient.place.create({ data: mockPlaceModelData() });
-    await prismaClient.place.create({
-      data: mockPlaceModelData(),
-    });
   });
 
   afterAll(async () => {
@@ -37,6 +34,13 @@ describe('PrismaUpdate Place Repository', () => {
       name: 'new_name',
       nickname: 'new_nickname',
       type: PlaceType.Teather,
+      address: {
+        city: 'new_city',
+        complement: 'new_complement',
+        line: 'new_line',
+        state: 'new_state',
+        zipCode: 'new_zip_code',
+      },
     });
 
     await prismaUpdatePlaceRepository.update(place);
@@ -44,17 +48,28 @@ describe('PrismaUpdate Place Repository', () => {
     const placeInDb = (await prismaClient.place.findUnique({
       where: { id: place.id },
     }))!;
+    const placeAddressInDb = (await prismaClient.placeAddress.findUnique({
+      where: { place_id: place.id },
+    }))!;
     expect(placeInDb).toEqual({
-      id: place.id,
-      name: place.name,
-      place_id: place.place.id,
-      startDate: place.duration.startsAt,
-      endDate: place.duration.endsAt,
-      type: place.type,
+      contact_email: place.contact.mail,
       contact_phone: place.contact.phone,
-      contact_email: place.contact.email,
-      created_at: placeInDb.created_at,
-      updated_at: placeInDb.updated_at,
+      name: place.name,
+      id: place.id,
+      type: place.type,
+      cpnj: place.cnpj,
+      created_at: place.createdAt,
+      nickname: place.nickname,
+      updated_at: place.updatedAt,
+    });
+    expect(placeAddressInDb).toEqual({
+      address: place.address.line,
+      city: place.address.city,
+      complement: place.address.complement,
+      id: 'any_id',
+      place_id: place.id,
+      state: place.address.state,
+      zip_code: place.address.zipCode,
     });
   });
 });
