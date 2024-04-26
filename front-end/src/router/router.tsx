@@ -1,3 +1,5 @@
+import { CreateEventScreen } from "@ui/screens/create-event/create-event.screen";
+import { CreatePlaceScreen } from "@ui/screens/create-place/create-place.screen";
 import { EventsScreen } from "@ui/screens/events/events-screen.screen";
 import { MainDashboardScreen } from "@ui/screens/main-dashboard/main-dashboard.screen";
 import { PlacesScreen } from "@ui/screens/places/places.screen";
@@ -13,7 +15,15 @@ export const router = createBrowserRouter([
     element: <PlacesScreen />,
   },
   {
+    path: "/locais/criar",
+    element: <CreatePlaceScreen />,
+  },
+  {
     path: "/eventos",
     element: <EventsScreen />,
+  },
+  {
+    path: "/eventos/criar",
+    element: <CreateEventScreen />,
   },
 ]);
