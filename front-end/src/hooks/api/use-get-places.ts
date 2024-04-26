@@ -3,7 +3,6 @@ import { Pagination } from "@utils/pagination.dto";
 import { useState } from "react";
 
 export function useGetPlaces(page: number, filter?: string) {
-  console.log("atualizou os locais");
   const [trigger, enableTrigger] = useState(false);
   const PLACES_PER_PAGE = 5;
   let url = `/places?take=${PLACES_PER_PAGE}&page=${page}`;
