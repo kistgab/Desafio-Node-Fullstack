@@ -17,7 +17,7 @@ import { PlaceMapper } from "@utils/mappers/Place.mapper";
 import { PlaceType } from "@utils/place-type.enum";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, redirect } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export type CreatePlaceFormInputs = {
   name: string;
@@ -43,6 +43,7 @@ export function CreatePlaceScreen() {
   const [gates, setGates] = useState<string[]>([]);
   const { createPlace, data, error: creatingError } = useCreatePlace();
   const toast = useToast();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (data) {
@@ -52,7 +53,7 @@ export function CreatePlaceScreen() {
         description: "Um novo local foi adicionado",
         position: "bottom-left",
       });
-      redirect("/locais");
+      navigate("/locais");
     }
   }, [data]);
 
