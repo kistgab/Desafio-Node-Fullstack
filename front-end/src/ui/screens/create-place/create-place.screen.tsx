@@ -7,6 +7,7 @@ import { BRAZIL_STATES } from "@utils/Helpers";
 import { PlaceType } from "@utils/place-type.enum";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 type Inputs = {
   name: string;
@@ -192,18 +193,20 @@ export function CreatePlaceScreen() {
           <Divider m={"1.5rem 0"} />
 
           <Flex justifyContent={"flex-end"} gap={"1.5rem"}>
-            <Button
-              variant={"outline"}
-              type="submit"
-              color={"#EBF0F9"}
-              borderColor={"#EBF0F9"}
-            >
-              Cancelar
-            </Button>
+            <Link to={"/locais"}>
+              <Button
+                variant={"outline"}
+                color={"#EBF0F9"}
+                borderColor={"#EBF0F9"}
+              >
+                Cancelar
+              </Button>
+            </Link>
 
             <Button
               isLoading={isSubmitting}
               bg={"#EBF0F9"}
+              type="submit"
               color={"#333B49"}
               _hover={{ bg: "#d4d8e0" }}
             >
