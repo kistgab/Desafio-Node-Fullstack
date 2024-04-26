@@ -1,6 +1,7 @@
 import { PlaceType } from '@domain/place/enums/place-type.enum';
 import { Type } from 'class-transformer';
 import {
+  ArrayMinSize,
   IsEmail,
   IsEnum,
   IsMobilePhone,
@@ -63,9 +64,11 @@ export class CreatePlaceControllerDto {
   @Type(() => ContactDto)
   contact: ContactDto;
 
+  @ArrayMinSize(1)
   @IsNotEmpty({ each: true })
   entries: string[];
 
+  @ArrayMinSize(1)
   @IsNotEmpty({ each: true })
   ticketGates: string[];
 }
