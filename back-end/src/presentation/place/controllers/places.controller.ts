@@ -13,10 +13,12 @@ import {
   HttpStatus,
   Param,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import { CreatePlaceControllerDto } from '@presentation/place/dtos/create-place-controller.dto';
 import { ListAllControllerDto } from '@presentation/place/dtos/list-all-controller.dto';
+import { UpdatePlaceControllerDto } from '@presentation/place/dtos/update-event-controller.dto';
 import { OutputCreatePlaceDto } from '@usecases/place/create/dto/create.place.dto';
 import { OutputDetailPlaceDto } from '@usecases/place/detail/dto/detail.place.dto';
 import { OutputListPlaceDto } from '@usecases/place/list-all/dto/list-all.place.dto';
@@ -75,6 +77,23 @@ export class PlacesController {
       };
     }
     const result = await useCase.execute(input);
+    if (result instanceof Error) {
+      throw new HttpException(result.message, HttpStatus.BAD_REQUEST);
+    }
+    return result;
+  }
+
+  @Put(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async update(
+    @Body() input: UpdatePlaceControllerDto,
+    @Param('id') id: string,
+  ): Promise<void> {
+    const useCase = await PlaceUseCasesFactory.updatePlace();
+    const result = await useCase.execute({
+      id,
+      ...input,
+    });
     if (result instanceof Error) {
       throw new HttpException(result.message, HttpStatus.BAD_REQUEST);
     }

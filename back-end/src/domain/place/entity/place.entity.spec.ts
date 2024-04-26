@@ -14,8 +14,8 @@ describe('Place Entity', () => {
       mail: 'mail@mail.com',
       phone: '99999999999',
     });
-    expect(place.entries).toEqual([]);
-    expect(place.ticketGates).toEqual([]);
+    expect(place.entries).toEqual(['entry']);
+    expect(place.ticketGates).toEqual(['gate']);
     expect(place.createdAt).toEqual(new Date('2023-01-29'));
     expect(place.updatedAt).toEqual(new Date('2024-04-04'));
     expect(place.address).toEqual({

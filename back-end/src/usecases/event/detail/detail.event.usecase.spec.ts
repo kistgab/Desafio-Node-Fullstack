@@ -17,6 +17,17 @@ export function mockDetailEventUseCase(): SutTypes {
 }
 
 describe('Detail Event UseCase', () => {
+  beforeAll(() => {
+    const mockedDate = new Date(2023, 9, 1, 7);
+    jest.spyOn(global, 'Date').mockImplementation(() => {
+      return mockedDate;
+    });
+  });
+
+  afterAll(() => {
+    jest.restoreAllMocks();
+  });
+
   it('should call FindEventByIdRepository with correct values', async () => {
     const { sut, findEventByIdRepositoryStub } = mockDetailEventUseCase();
     const findByIdSpy = jest.spyOn(findEventByIdRepositoryStub, 'findById');
