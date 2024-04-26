@@ -14,7 +14,7 @@ export type InputCreatePlaceDto = {
   };
   contact: {
     mail: string;
-    phone: string;
+    phone?: string;
   };
   entries: string[];
   ticketGates: string[];

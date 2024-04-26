@@ -33,8 +33,9 @@ class ContactDto {
   @IsEmail()
   mail: string;
 
+  @IsOptional()
   @IsMobilePhone()
-  phone: string;
+  phone?: string;
 }
 
 export class CreatePlaceControllerDto {

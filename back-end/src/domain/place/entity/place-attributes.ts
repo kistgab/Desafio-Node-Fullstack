@@ -1,6 +1,6 @@
 export type PlaceContact = {
   mail: string;
-  phone: string;
+  phone?: string;
 };
 
 export type PlaceAddress = {

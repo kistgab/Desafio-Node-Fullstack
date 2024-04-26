@@ -140,6 +140,7 @@ describe('Update Event UseCase', () => {
       input.placeId,
       input.duration.startsAt,
       input.duration.endsAt,
+      [input.id],
     );
   });
 
