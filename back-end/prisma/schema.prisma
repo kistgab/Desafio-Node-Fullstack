@@ -15,7 +15,7 @@ model Place {
   cpnj          String?
   created_at    DateTime      @default(now())
   updated_at    DateTime      @updatedAt
-  contact_phone String
+  contact_phone String?
   contact_email String
   entries       Entry[]
   ticket_gates  TicketGate[]
@@ -68,7 +68,7 @@ model TicketGate {
 model Event {
   id            String    @id @default(uuid())
   name          String
-  place         Place     @relation(fields: [place_id], references: [id])
+  place         Place     @relation(fields: [place_id], references: [id], onDelete: Cascade)
   place_id      String
   startDate     DateTime
   endDate       DateTime

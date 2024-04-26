@@ -15,7 +15,7 @@ export abstract class PlaceModelMapper {
         zipCode: model.place_address!.zip_code,
         complement: model.place_address?.complement ?? undefined,
       },
-      { mail: model.contact_email, phone: model.contact_phone },
+      { mail: model.contact_email, phone: model.contact_phone ?? undefined },
       model.entries.map((entry) => entry.name),
       model.ticket_gates.map((ticketGate) => ticketGate.name),
       model.nickname ?? undefined,

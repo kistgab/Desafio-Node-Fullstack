@@ -3,5 +3,6 @@ export interface IsPlaceAvailableAtRepository {
     placeId: string,
     startDate: Date,
     endDate: Date,
+    eventIdsToIgnore?: string[],
   ): Promise<boolean>;
 }
