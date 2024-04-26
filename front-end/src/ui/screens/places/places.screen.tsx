@@ -31,10 +31,10 @@ export function PlacesScreen() {
     return Promise.resolve();
   }
 
-  function onEdit(id: string): Promise<void> {
-    console.log(`Updated id: ${id}`);
-    return Promise.resolve();
-  }
+  // function onEdit(id: string): Promise<void> {
+  //   console.log(`Updated id: ${id}`);
+  //   return Promise.resolve();
+  // }
 
   const mappedData = paginatedData?.data.map(PlaceMapper.mapPlaceDataSummary);
   return (
@@ -61,7 +61,7 @@ export function PlacesScreen() {
       data={mappedData || []}
       events={{
         onDelete,
-        onEdit,
+        // onEdit,
         onCreateHref: "/locais/criar",
       }}
       pagination={{

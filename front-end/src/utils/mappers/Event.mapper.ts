@@ -1,5 +1,5 @@
 import { OutputGetEventsDto } from "@hooks/api/use-get-events";
-import { EventDataSummary } from "@ui/screens/events/events-screen.screen";
+import { EventDataSummary } from "@ui/screens/events/events.screen";
 import { toBrazillianStringDate } from "@utils/Helpers";
 
 export abstract class EventMapper {

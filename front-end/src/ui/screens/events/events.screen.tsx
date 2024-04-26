@@ -32,10 +32,10 @@ export function EventsScreen() {
     return Promise.resolve();
   }
 
-  function onEdit(id: string): Promise<void> {
-    console.log(`Updated id: ${id}`);
-    return Promise.resolve();
-  }
+  // function onEdit(id: string): Promise<void> {
+  //   console.log(`Updated id: ${id}`);
+  //   return Promise.resolve();
+  // }
 
   const mappedData = paginatedData?.data.map(EventMapper.mapEventDataSummary);
   return (
@@ -64,7 +64,7 @@ export function EventsScreen() {
       data={mappedData || []}
       events={{
         onDelete,
-        onEdit,
+        // onEdit,
         onCreateHref: "/eventos/criar",
       }}
       pagination={{
