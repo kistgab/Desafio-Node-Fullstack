@@ -82,7 +82,6 @@ export function CreatePlaceScreen() {
                 placeholder="Informe o cnpj (caso exista)"
                 register={register}
                 label="CNPJ"
-                mask="99.999.999/9999-99"
               />
             </SimpleGrid>
           </Box>
@@ -189,6 +188,8 @@ export function CreatePlaceScreen() {
               />
             </SimpleGrid>
           </Box>
+
+          <Divider m={"1.5rem 0"} />
 
           <Flex justifyContent={"flex-end"} gap={"1.5rem"}>
             <Button
